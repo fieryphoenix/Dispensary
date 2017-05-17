@@ -3,13 +3,13 @@
 <#macro page_head>
 </#macro>
 
-<#macro indexmaster title="defaultTitle">
+<#macro indexmaster titleKey="defaultTitle">
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <@common_page_head/>
     <@page_head/>
-    <title>${title}</title>
+    <title>${springMacroRequestContext.getMessage(titleKey)}</title>
 </head>
 <body>
     <#include "navigation.ftl" />
