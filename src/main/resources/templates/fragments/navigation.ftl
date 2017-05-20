@@ -9,11 +9,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand"
+               href="<@spring.url '/'/>">${springMacroRequestContext.getMessage('organization.name')}</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="<@spring.url '/'/>">Home</a></li>
+                <li class="active"><a
+                        href="<@spring.url '/'/>">${springMacroRequestContext.getMessage('page.nav.home')}</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li class="dropdown">
@@ -31,7 +33,16 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="<@spring.url '/login'/>">Log In</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">${springMacroRequestContext.getMessage('page.nav.language')}<span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<@spring.url '/?language=ru'/>">Русский</a></li>
+                        <li><a href="<@spring.url '/?language=en'/>">English</a></li>
+                    </ul>
+                </li>
+                <li><a href="<@spring.url '/login'/>">${springMacroRequestContext.getMessage('page.nav.login')}</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
