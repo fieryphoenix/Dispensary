@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@SessionAttributes("UserForm")
 public class UserController {
   private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -35,14 +37,14 @@ public class UserController {
     binder.setValidator(userFormValidator);
   }
 
-  @RequestMapping(params = "/login", method = RequestMethod.GET)
+  @RequestMapping(path = "/login", method = RequestMethod.GET)
   public String login(Model model) {
     model.addAttribute("UserForm", new User());
     model.addAttribute("Remember", false);
     return "login";
   }
 
-  @RequestMapping(params = "/login", method = RequestMethod.POST)
+  @RequestMapping(path = "/login-processing", method = RequestMethod.POST)
   public String doLogin(@ModelAttribute("UserForm") @Validated User user, BindingResult result,
                         RedirectAttributes redirectAttributes) {
 
@@ -58,11 +60,11 @@ public class UserController {
 //            userService.saveOrUpdate(user);
 
       // POST/REDIRECT/GET
-      return "redirect:/hello/";
+      return "redirect:/index/";
     }
   }
 
-  @RequestMapping(params = "/logout", method = RequestMethod.GET)
+  @RequestMapping(path = "/logout", method = RequestMethod.GET)
   public String doLogout(Model model) {
     model.asMap().clear();
     return "/";
