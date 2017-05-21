@@ -1,0 +1,14 @@
+[
+  {
+    "_class": "com.rozenkow.model.User",
+    "id": null,
+    "username": "admin",
+    "passwordHash": "HJqihf31Jkg8fg==",
+    "passwordSalt": "KzANaoaAs0HZZg==",
+    "displayName": "System Admin",
+    "authorities": [
+      "USER",
+      "ADMIN"
+    ]
+  }
+]

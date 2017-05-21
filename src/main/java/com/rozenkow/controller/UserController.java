@@ -18,50 +18,54 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/login")
-public class LoginController {
+public class UserController {
+  private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-  private final Logger logger = LoggerFactory.getLogger(LoginController.class);
-
-  @Autowired
-  private UserService userService;
+  private final UserService userService;
+  private final UserFormValidator userFormValidator;
 
   @Autowired
-  private UserFormValidator userFormValidator;
+  public UserController(UserService userService, UserFormValidator userFormValidator) {
+    this.userService = userService;
+    this.userFormValidator = userFormValidator;
+  }
 
   @InitBinder
   protected void initBinder(WebDataBinder binder) {
     binder.setValidator(userFormValidator);
   }
 
-  @RequestMapping(method = RequestMethod.GET)
-  public String login() {
+  @RequestMapping(params = "/login", method = RequestMethod.GET)
+  public String login(Model model) {
+    model.addAttribute("UserForm", new User());
+    model.addAttribute("Remember", false);
     return "login";
   }
 
-  @RequestMapping(method = RequestMethod.POST)
-  public String doLogin(@ModelAttribute("UserForm") @Validated User user, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+  @RequestMapping(params = "/login", method = RequestMethod.POST)
+  public String doLogin(@ModelAttribute("UserForm") @Validated User user, BindingResult result,
+                        RedirectAttributes redirectAttributes) {
 
     logger.debug("doLogin() : {}", user);
 
     if (result.hasErrors()) {
-//            populateDefaultModel(model);
       return "login";
     } else {
 
-      // Add message to flash scope
       redirectAttributes.addFlashAttribute("css", "success");
-      redirectAttributes.addFlashAttribute("msg", "Successfully logged-in!");
+      redirectAttributes.addFlashAttribute("msgKey", "Success.userForm.login");
 
 //            userService.saveOrUpdate(user);
 
       // POST/REDIRECT/GET
-      model.addAttribute("name", user.getLogin());
       return "redirect:/hello/";
-
-      // POST/FORWARD/GET
-      // return "user/list";
-
     }
   }
+
+  @RequestMapping(params = "/logout", method = RequestMethod.GET)
+  public String doLogout(Model model) {
+    model.asMap().clear();
+    return "/";
+  }
+
 }

@@ -15,6 +15,8 @@ import java.util.Locale;
 public class DispensaryApplication extends WebMvcConfigurerAdapter {
 
   private static final String DEFAULT_LOCALE = "ru";
+  private static final String[] MESSAGES_LOCATIONS = {"classpath:lang/messages", "classpath:lang/validation",
+      "classpath:org/springframework/security/messages"};
 
   public static void main(String[] args) {
     SpringApplication.run(DispensaryApplication.class, args);
@@ -48,7 +50,7 @@ public class DispensaryApplication extends WebMvcConfigurerAdapter {
   public ReloadableResourceBundleMessageSource messageSource() {
 
     ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-    messageSource.setBasename("classpath:lang/messages");
+    messageSource.addBasenames(MESSAGES_LOCATIONS);
     messageSource.setCacheSeconds(10); //reload messages every 10 seconds
 
     return messageSource;

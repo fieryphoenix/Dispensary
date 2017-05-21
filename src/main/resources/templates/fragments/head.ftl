@@ -21,7 +21,7 @@
         crossorigin="anonymous"></script>
 
 <!-- Custom styles for this template -->
-<link href="<@spring.url '/css/sticky-footer-navbar.css'/>" rel="stylesheet">
+<link href="<@spring.url '/resources/css/sticky-footer-navbar.css'/>" rel="stylesheet" type="text/css">
 
 <link rel="icon" href="../../favicon.ico">
 </#macro>
