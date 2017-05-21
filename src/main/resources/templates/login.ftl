@@ -2,12 +2,12 @@
 <#include "./fragments/page.master.ftl"/>
 
 <#macro page_head>
-<link href="<@spring.url '/resources/css/login.css'/>" rel="stylesheet">
+<link href="<@spring.url '/css/login.css'/>" rel="stylesheet">
 </#macro>
 
 <#assign layoutOut>
 
-<form class="form-signin" action="/login" method="post" modelAttribute="UserForm">
+<form class="form-signin" action="/login-processing" method="post" modelAttribute="UserForm">
     <@spring.bind "UserForm"/>
 
     <#if spring.status.error>

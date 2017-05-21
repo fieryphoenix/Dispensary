@@ -57,26 +57,6 @@ public class User implements UserDetails {
     return username;
   }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return false;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
-
   public void setUsername(String username) {
     this.username = username;
   }
@@ -95,6 +75,26 @@ public class User implements UserDetails {
 
   public void setPasswordSalt(String passwordSalt) {
     this.passwordSalt = passwordSalt;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return false;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 
   @Override

@@ -36,7 +36,7 @@ public class UserFormValidator implements Validator {
 
     User user = (User) target;
 
-    rejectIfEmptyOrWhitespace(errors, "login", "NotEmpty.userForm.login");
+    rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty.userForm.username");
     rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userForm.password");
 
     try {

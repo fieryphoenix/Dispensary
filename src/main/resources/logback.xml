@@ -29,11 +29,11 @@
         <appender-ref ref="STDOUT_DB"/>
     </logger>
 
-    <logger name="org.springframework.security" level="trace" additivity="false">
+    <logger name="org.springframework.security" level="info" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="org.springframework.web" level="trace" additivity="false">
+    <logger name="org.springframework.web" level="info" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
