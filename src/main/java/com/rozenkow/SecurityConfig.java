@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .formLogin()
           .loginPage("/login")
-        .successHandler(new SavedRequestAwareAuthenticationSuccessHandler());
+        .successHandler(new SavedRequestAwareAuthenticationSuccessHandler()).defaultSuccessUrl("/index");
     // @formatter:on
   }
 }

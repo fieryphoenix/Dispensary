@@ -60,7 +60,7 @@ public class UserController {
 //            userService.saveOrUpdate(user);
 
       // POST/REDIRECT/GET
-      return "redirect:/index/";
+      return "redirect:/index";
     }
   }
 
