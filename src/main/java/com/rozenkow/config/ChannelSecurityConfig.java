@@ -1,6 +1,5 @@
-package com.rozenkow;
+package com.rozenkow.config;
 
-import com.rozenkow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -9,9 +8,10 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * Created by Poul Rozenkow on 5/21/2017.
+ * Created by Poul Rozenkow.
  */
 
 @Configuration
@@ -20,10 +20,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Profile("https")
 public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final UserService userService;
+  private final UserDetailsService userService;
 
   @Autowired
-  public ChannelSecurityConfig(UserService userService) {
+  public ChannelSecurityConfig(UserDetailsService userService) {
     this.userService = userService;
   }
 
@@ -32,12 +32,12 @@ public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
         .authorizeRequests()
-          .antMatchers( "/css/**", "/js/**", "/index", "/").permitAll()
+          .antMatchers( "/css/**", "/js/**", "/index", "/", "/tld/**").permitAll()
           .antMatchers("/user/**").hasRole("USER")
           .anyRequest().authenticated()
           .and()
         .requiresChannel()
-          .antMatchers("/login*", "/perform_login").requiresSecure()
+          .antMatchers("/showMedicalRecords*", "/perform_login").requiresSecure()
           .anyRequest().requiresInsecure()
         .and()
           .sessionManagement()
@@ -45,10 +45,10 @@ public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
         .none()
         .and()
         .formLogin()
-          .loginPage("/login")
-          .loginProcessingUrl("/login-processing")
+          .loginPage("/showMedicalRecords")
+          .loginProcessingUrl("/showMedicalRecords-processing")
           .defaultSuccessUrl("/index", true)
-          .failureUrl("/login?error=true")
+          .failureUrl("/showMedicalRecords?error=true")
           .and()
         .logout()
           .logoutUrl("/logout")

@@ -42,7 +42,7 @@ public class UserFormValidator implements Validator {
     try {
       boolean loginSuccess = userService.checkLogin(user);
       if (!loginSuccess) {
-        errors.reject("login", "Failed.userForm.login");
+        errors.reject("showMedicalRecords", "Failed.userForm.login");
       }
     } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
       logger.error("Failed to check user", e);

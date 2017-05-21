@@ -15,7 +15,7 @@ import java.security.spec.KeySpec;
 import java.util.Base64;
 
 /**
- * Created by Poul Rozenkow on 5/20/2017.
+ * Created by Poul Rozenkow.
  */
 public class EncryptUtils {
   private static final int ROUNDS = 20;

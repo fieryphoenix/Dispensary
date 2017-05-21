@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Created by Poul Rozenkow on 5/21/2017.
+ * Created by Poul Rozenkow.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -48,7 +48,7 @@ public class SecurityConfigTest {
         .andReturn();
 
     // @formatter:on
-    assertThat(mvcResult.getResponse().getRedirectedUrl()).endsWith("/login");
+    assertThat(mvcResult.getResponse().getRedirectedUrl()).endsWith("/showMedicalRecords");
   }
 
   @Test

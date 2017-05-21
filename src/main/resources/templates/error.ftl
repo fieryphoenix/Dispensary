@@ -1,8 +1,8 @@
 <#import "./fragments/page.master.ftl" as layout/>
 
 <@layout.indexmaster titleKey="page.title.error">
-<form class="form-signin" action="/login" method="post" modelAttribute="UserForm">
+<div class="page-header">
     <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.error')}</h2>
     <p>print nice error</p>
-</form>
+</div>
 </@layout.indexmaster>

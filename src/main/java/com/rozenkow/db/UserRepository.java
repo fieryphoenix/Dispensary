@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by Poul Rozenkow on 5/20/2017.
+ * Created by Poul Rozenkow.
  */
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {

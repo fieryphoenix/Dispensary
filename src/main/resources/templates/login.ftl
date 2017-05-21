@@ -19,13 +19,15 @@
         </div>
     </#if>
 
-    <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.signin')}</h2>
+    <div class="page-header">
+        <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.signin')}</h2>
+    </div>
 
     <input type="hidden" id="id" value=""/>
-    <label for="UserForm.username"
+    <label for="username"
            class="sr-only">${springMacroRequestContext.getMessage('page.field.username')}</label>
     <@spring.formInput "UserForm.username" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.username')}' required autofocus" "text"/><@spring.showErrors "<br>"/>
-    <label for="UserForm.password"
+    <label for="password"
            class="sr-only">${springMacroRequestContext.getMessage('page.field.password')}</label>
     <@spring.formInput "UserForm.password" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.password')}' required" "password"/><@spring.showErrors "<br>"/>
     <div class="checkbox">
@@ -43,6 +45,4 @@
 </#assign>
 
 <@layout.indexmaster  nestedOut="${layoutOut}" titleKey="page.title.login">
-
-<h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.signin')}!!!</h2>
 </@layout.indexmaster>

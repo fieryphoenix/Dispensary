@@ -1,4 +1,4 @@
-package com.rozenkow;
+package com.rozenkow.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.repository.init.Jackson2RepositoryPopulatorFactoryBean;
 
 /**
- * Created by Poul Rozenkow on 5/21/2017.
+ * Created by Poul Rozenkow.
  */
 @Configuration
 public class DBConfig {

@@ -23,7 +23,7 @@
             <strong>${springMacroRequestContext.getMessage(msgKey)}</strong>
         </div>
     </#if>
-    <div class="page-header">
+    <div class="col-md-12">
         <#if nestedOut?has_content>
             ${nestedOut}
         <#else>

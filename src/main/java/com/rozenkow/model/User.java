@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by Poul Rozenkow on 5/15/2017.
+ * Created by Poul Rozenkow.
  */
 @Document(collection = "users")
 public class User implements UserDetails {

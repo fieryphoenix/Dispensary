@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by Poul Rozenkow on 5/20/2017.
+ * Created by Poul Rozenkow.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest

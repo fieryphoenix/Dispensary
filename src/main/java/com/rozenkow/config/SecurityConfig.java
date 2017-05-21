@@ -1,4 +1,4 @@
-package com.rozenkow;
+package com.rozenkow.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 /**
- * Created by Poul Rozenkow on 5/21/2017.
+ * Created by Poul Rozenkow.
  */
 
 @Configuration
@@ -33,11 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
         .authorizeRequests()
-          .antMatchers("/login*", "/", "/index", "/css/**", "/js/**").permitAll()
-          .anyRequest().authenticated()
+//          .antMatchers("/showMedicalRecords*", "/", "/index", "/css/**", "/js/**", "/tld/**").permitAll() fixme - temporal for dev
+          .anyRequest().permitAll()
         .and()
         .formLogin()
-          .loginPage("/login")
+          .loginPage("/showMedicalRecords")
         .successHandler(new SavedRequestAwareAuthenticationSuccessHandler()).defaultSuccessUrl("/index");
     // @formatter:on
   }

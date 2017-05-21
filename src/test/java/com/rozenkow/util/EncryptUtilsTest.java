@@ -3,11 +3,13 @@ package com.rozenkow.util;
 import org.junit.Test;
 import org.springframework.data.util.Pair;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by Poul Rozenkow on 5/20/2017.
+ * Created by Poul Rozenkow.
  */
 public class EncryptUtilsTest {
 
