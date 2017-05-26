@@ -5,21 +5,22 @@
 
 <form class="form-horizontal" method="post">
     <@spring.bind "MedRecord"/>
+    <@spring.bind "Sexes"/>
+    <@spring.bind "Countries"/>
 
-    <div class="row">
-        <div class="page-header">
-            <#if (MedRecord.id)??>
-                <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.medRecord.edit')}</h2>
-            <#else>
-                <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.medRecord.new')}</h2>
-            </#if>
-        </div>
+    <div class="page-header">
+        <#if (MedRecord.id)??>
+            <h1>${springMacroRequestContext.getMessage('page.header.medRecord.edit')}</h1>
+        <#else>
+            <h1>${springMacroRequestContext.getMessage('page.header.medRecord.new')}</h1>
+        </#if>
 
-        <div class="pull-right">
-            <a href="/medrecord/${(MedRecord.id)!''}">
-                <button type="submit" class="btn btn-success">Save</button>
-            </a>
-        </div>
+    </div>
+    <div class="pull-right">
+        <a href="/medrecord/${(MedRecord.id)!''}">
+            <button type="submit"
+                    class="btn btn-success">${springMacroRequestContext.getMessage('page.button.medRecord.save')}</button>
+        </a>
     </div>
 
     <div class="row">
@@ -27,7 +28,7 @@
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Patient</h3>
+                    <h3 class="panel-title">${springMacroRequestContext.getMessage('page.header.patient')}</h3>
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
@@ -44,6 +45,86 @@
                             <@spring.formInput "MedRecord.patient.lastName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.lastName')}' required" "text"/><@spring.showErrors "<br>"/>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="patient.middleName"
+                               class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.middleName')}</label>
+                        <div class="col-sm-9">
+                            <@spring.formInput "MedRecord.patient.middleName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.middleName')}'" "text"/><@spring.showErrors "<br>"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient.passportSeries"
+                               class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.passport')}</label>
+                        <div class="col-sm-3">
+                            <@spring.formInput "MedRecord.patient.passportSeries" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.passportSeries')}' required" "text"/><@spring.showErrors "<br>"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <@spring.formInput "MedRecord.patient.passportNumber" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.passportNumber')}' required" "text"/><@spring.showErrors "<br>"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient.birthDate"
+                               class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.birthDate')}</label>
+                        <div class="col-sm-9">
+                            <@spring.formInput "MedRecord.patient.birthDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.birthDate')}' required" "date"/><@spring.showErrors "<br>"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient.sex"
+                               class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.sex')}</label>
+                        <div class="col-sm-9">
+                            <@spring.formSingleSelect "MedRecord.patient.sex", Sexes, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.patient.sex')}' required">
+                            </@spring.formSingleSelect>
+                            <@spring.showErrors "<br>"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">${springMacroRequestContext.getMessage('page.header.patient.address')}
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <address>
+                        <div class="form-group">
+                            <label for="patient.address1.country"
+                                   class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.address.country')}</label>
+                            <div class="col-sm-9">
+                                <@spring.formSingleSelect "MedRecord.patient.address1.country", Countries, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.patient.address.country')}' required">
+                                </@spring.formSingleSelect>
+                            <@spring.showErrors "<br>"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient.address1.city"
+                                   class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.address.city')}</label>
+                            <div class="col-sm-9">
+                                <@spring.formInput "MedRecord.patient.address1.city" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.address.city')}' required" "text"/><@spring.showErrors "<br>"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient.address1.street"
+                                   class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.address.street')}</label>
+                            <div class="col-sm-9">
+                                <@spring.formInput "MedRecord.patient.address1.street" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.address.street')}' required" "text"/><@spring.showErrors "<br>"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient.address1.house"
+                                   class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.address.house')}</label>
+                            <div class="col-sm-9">
+                                <@spring.formInput "MedRecord.patient.address1.house" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.address.house')}' required" "text"/><@spring.showErrors "<br>"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="patient.address1.flat"
+                                   class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.address.flat')}</label>
+                            <div class="col-sm-9">
+                                <@spring.formInput "MedRecord.patient.address1.flat" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.address.flat')}'" "text"/><@spring.showErrors "<br>"/>
+                            </div>
+                        </div>
+                    </address>
                 </div>
             </div>
         </div>
@@ -64,10 +145,12 @@
     <div class="row">
         <div class="pull-right">
             <a href="/medrecords">
-                <button type="button" class="btn btn-danger">Cancel</button>
+                <button type="button"
+                        class="btn btn-danger">${springMacroRequestContext.getMessage('page.button.medRecord.cancel')}</button>
             </a>
             <a href="/medrecord/${(MedRecord.id)!''}">
-                <button type="submit" class="btn btn-success">Save</button>
+                <button type="submit"
+                        class="btn btn-success">${springMacroRequestContext.getMessage('page.button.medRecord.save')}</button>
             </a>
         </div>
     </div>
@@ -76,4 +159,12 @@
 
 </#assign>
 
-<@layout.indexmaster  nestedOut="${layoutOut}" titleKey="page.title.medRecords"/>
+<#function title>
+    <#if (MedRecord.id)??>
+        <#return 'page.title.medRecord.edit'/>
+    <#else>
+        <#return 'page.title.medRecord.register'/>
+    </#if>
+</#function>
+
+<@layout.indexmaster  nestedOut="${layoutOut}" titleKey="${title()}"/>

@@ -12,6 +12,10 @@ public class Address implements Serializable {
   private String house;
   private String flat;
 
+  public Address() {
+    country = System.getProperty("user.country");
+  }
+
   public String getCity() {
     return city;
   }

@@ -6,15 +6,14 @@
 <form class="form-medrecords">
     <@spring.bind "MedRecords"/>
 
-    <div class="row">
-        <div class="page-header">
-            <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.medRecords')}</h2>
-        </div>
-        <div class="pull-right">
-            <a href="/medrecord">
-                <button type="button" class="btn btn-primary">Register New Medical Record</button>
-            </a>
-        </div>
+    <div class="page-header">
+        <h1>${springMacroRequestContext.getMessage('page.header.medRecords')}</h1>
+
+    </div>
+    <div class="row pull-right">
+        <a href="/medrecord">
+            <button type="button" class="btn btn-primary">Register New Medical Record</button>
+        </a>
     </div>
 
     <div class="col-md-12">

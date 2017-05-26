@@ -2,7 +2,7 @@
 
 <@layout.indexmaster titleKey="page.title.error">
 <div class="page-header">
-    <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.error')}</h2>
+    <h2>${springMacroRequestContext.getMessage('page.header.error')}</h2>
     <p>print nice error</p>
 </div>
 </@layout.indexmaster>
