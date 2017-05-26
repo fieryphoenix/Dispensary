@@ -2,22 +2,16 @@ package com.rozenkow.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Poul Rozenkow.
  */
-@Document
-public class MedicalRecord {
-  private String id;
+@Document(collection = "medrecords")
+public class MedicalRecord extends AuditEntity {
   private Patient patient;
   private String number;
-  private LocalDateTime created;
-  private LocalDateTime modified;
-  private User createdBy;
-  private User modifiedBy;
   private List<Disease> diseases;
   private List<Ultrasound> ultrasounds;
   private List<String> medicalExaminations;
@@ -27,14 +21,6 @@ public class MedicalRecord {
     diseases = new ArrayList<>();
     ultrasounds = new ArrayList<>();
     medicalExaminations = new ArrayList<>();
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public Patient getPatient() {
@@ -51,38 +37,6 @@ public class MedicalRecord {
 
   public void setNumber(String number) {
     this.number = number;
-  }
-
-  public LocalDateTime getCreated() {
-    return created;
-  }
-
-  public void setCreated(LocalDateTime created) {
-    this.created = created;
-  }
-
-  public LocalDateTime getModified() {
-    return modified;
-  }
-
-  public void setModified(LocalDateTime modified) {
-    this.modified = modified;
-  }
-
-  public User getCreatedBy() {
-    return createdBy;
-  }
-
-  public void setCreatedBy(User createdBy) {
-    this.createdBy = createdBy;
-  }
-
-  public User getModifiedBy() {
-    return modifiedBy;
-  }
-
-  public void setModifiedBy(User modifiedBy) {
-    this.modifiedBy = modifiedBy;
   }
 
   public List<Disease> getDiseases() {
@@ -107,5 +61,19 @@ public class MedicalRecord {
 
   public void setMedicalExaminations(List<String> medicalExaminations) {
     this.medicalExaminations = medicalExaminations;
+  }
+
+  @Override
+  public String toString() {
+    return "MedicalRecord{" +
+           "id='" + getId() + '\'' +
+           ", patient=" + patient +
+           ", number='" + number + '\'' +
+           ", created=" + getCreatedDate() +
+           ", modified=" + getUpdatedDate() +
+           ", diseases=" + diseases +
+           ", ultrasounds=" + ultrasounds +
+           ", medicalExaminations=" + medicalExaminations +
+           '}';
   }
 }

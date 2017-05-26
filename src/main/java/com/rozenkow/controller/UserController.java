@@ -21,6 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @SessionAttributes("UserForm")
 public class UserController {
+  private static final String LOGIN_PAGE = "login";
+
   private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
   private final UserService userService;
@@ -41,7 +43,7 @@ public class UserController {
   public String login(Model model) {
     model.addAttribute("UserForm", new User());
     model.addAttribute("Remember", false);
-    return "login";
+    return LOGIN_PAGE;
   }
 
   @RequestMapping(path = "/login-processing", method = RequestMethod.POST)
@@ -51,7 +53,7 @@ public class UserController {
     logger.debug("doLogin() : {}", user);
 
     if (result.hasErrors()) {
-      return "login";
+      return LOGIN_PAGE;
     } else {
 
       redirectAttributes.addFlashAttribute("css", "success");

@@ -16,19 +16,23 @@
 
 <div class="container">
     <#if msgKey??>
-        <div class="alert alert-${css} alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>${springMacroRequestContext.getMessage(msgKey)}</strong>
+        <div class="row">
+            <div class="alert alert-${css} alert-dismissible" role="alert" style="margin-top: 30px 0 0 0;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>${springMacroRequestContext.getMessage(msgKey)}</strong>
+            </div>
         </div>
     </#if>
-    <div class="col-md-12">
-        <#if nestedOut?has_content>
+    <div class="row">
+        <div class="col-md-12">
+            <#if nestedOut?has_content>
             ${nestedOut}
         <#else>
-            <#nested />
-        </#if>
+                <#nested />
+            </#if>
+        </div>
     </div>
 </div>
 

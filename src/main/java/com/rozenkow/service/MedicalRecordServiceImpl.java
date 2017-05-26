@@ -29,4 +29,28 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
   public MedicalRecord getRecord(String id) {
     return medicalRecordRepository.findOne(id);
   }
+
+  @Override
+  public MedicalRecord saveRecord(MedicalRecord medicalRecord) {
+    MedicalRecord recordsToSave = medicalRecordRepository.findOne(medicalRecord.getId());
+    if (recordsToSave != null) {
+      recordsToSave.setPatient(medicalRecord.getPatient());
+      recordsToSave.setDiseases(medicalRecord.getDiseases());
+      recordsToSave.setMedicalExaminations(medicalRecord.getMedicalExaminations());
+      recordsToSave.setUltrasounds(medicalRecord.getUltrasounds());
+    } else {
+      recordsToSave = medicalRecord;
+    }
+    return medicalRecordRepository.save(recordsToSave);
+  }
+
+  @Override
+  public boolean removeRecord(String id) {
+    MedicalRecord recordsToSave = medicalRecordRepository.findOne(id);
+    if (recordsToSave != null) {
+      medicalRecordRepository.delete(recordsToSave);
+      return true;
+    }
+    return false;
+  }
 }

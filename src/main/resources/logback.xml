@@ -21,7 +21,7 @@
         </layout>
     </appender>
 
-    <logger name="org.springframework" level="error" additivity="false">
+    <logger name="org.springframework" level="info" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
@@ -29,7 +29,7 @@
         <appender-ref ref="STDOUT_DB"/>
     </logger>
 
-    <logger name="org.springframework.security" level="info" additivity="false">
+    <logger name="org.springframework.security" level="trace" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 

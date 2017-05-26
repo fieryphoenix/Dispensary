@@ -25,6 +25,7 @@
 
 <#-- Custom JS -->
 <script src="<@spring.url '/js/nav.js'/>"></script>
+<script src="<@spring.url '/js/form.js'/>"></script>
 
 <link rel="icon" href="../../favicon.ico">
 </#macro>

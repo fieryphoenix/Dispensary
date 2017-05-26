@@ -1,23 +1,19 @@
 package com.rozenkow.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Poul Rozenkow.
  */
-@Document
 public class Patient {
-  private String id;
   private String firstName;
   private String lastName;
   private String middleName;
   private String passportNumber;
   private String passportSeries;
-  private LocalDate birthDate;
+  private Date birthDate;
   private Sex sex;
   private Address address1;
   private List<String> phones;
@@ -25,14 +21,6 @@ public class Patient {
   public Patient() {
     phones = new ArrayList<>();
     address1 = new Address();
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public String getFirstName() {
@@ -75,11 +63,11 @@ public class Patient {
     this.passportSeries = passportSeries;
   }
 
-  public LocalDate getBirthDate() {
+  public Date getBirthDate() {
     return birthDate;
   }
 
-  public void setBirthDate(LocalDate birthDate) {
+  public void setBirthDate(Date birthDate) {
     this.birthDate = birthDate;
   }
 
@@ -114,8 +102,7 @@ public class Patient {
   @Override
   public String toString() {
     return "Patient{" +
-           "id='" + id + '\'' +
-           ", firstName='" + firstName + '\'' +
+           "firstName='" + firstName + '\'' +
            ", lastName='" + lastName + '\'' +
            ", middleName='" + middleName + '\'' +
            ", passportNumber='" + passportNumber + '\'' +

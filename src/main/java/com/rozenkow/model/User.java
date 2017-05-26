@@ -1,6 +1,5 @@
 package com.rozenkow.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,9 +14,8 @@ import java.util.List;
  * Created by Poul Rozenkow.
  */
 @Document(collection = "users")
-public class User implements UserDetails {
-  @Id
-  private String id;
+public class User extends AuditEntity implements UserDetails {
+
   private String username;
   private String passwordHash;
   private String passwordSalt;
@@ -31,7 +29,7 @@ public class User implements UserDetails {
 
   @PersistenceConstructor
   public User(String id, String username, String passwordHash, String passwordSalt, String displayName) {
-    this.id = id;
+    setId(id);
     this.username = username;
     this.passwordHash = passwordHash;
     this.passwordSalt = passwordSalt;
@@ -42,14 +40,6 @@ public class User implements UserDetails {
     this.username = username;
     this.password = password;
     this.displayName = displayName;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   @Override
@@ -122,7 +112,7 @@ public class User implements UserDetails {
   @Override
   public String toString() {
     return "User{" +
-           "id='" + id + '\'' +
+           "id='" + getId() + '\'' +
            ", username='" + username + '\'' +
            ", displayName='" + displayName + '\'' +
            ", authorities=" + authorities +

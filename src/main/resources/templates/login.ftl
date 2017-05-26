@@ -20,7 +20,7 @@
     </#if>
 
     <div class="page-header">
-        <h1 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.signin')}</h1>
+        <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.signin')}</h2>
     </div>
 
     <input type="hidden" id="id" value=""/>

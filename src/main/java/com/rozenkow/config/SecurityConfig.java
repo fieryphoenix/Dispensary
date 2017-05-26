@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           .anyRequest().permitAll()
         .and()
         .formLogin()
-          .loginPage("/showMedicalRecords")
+          .loginPage("/login")
         .successHandler(new SavedRequestAwareAuthenticationSuccessHandler()).defaultSuccessUrl("/index");
     // @formatter:on
   }

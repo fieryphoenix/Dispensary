@@ -1,31 +1,30 @@
-<#import "./fragments/page.master.ftl" as layout/>
-<#include "./fragments/page.master.ftl"/>
+<#import "../fragments/page.master.ftl" as layout/>
+<#include "../fragments/page.master.ftl"/>
 
 <#assign layoutOut>
 
-<form class="form-horizontal" method="post">
+<form class="form-horizontal" method="post" action="/medrecord" modelAttribute="MedRecord">
     <@spring.bind "MedRecord"/>
     <@spring.bind "Sexes"/>
     <@spring.bind "Countries"/>
 
     <div class="page-header">
         <#if (MedRecord.id)??>
-            <h1>${springMacroRequestContext.getMessage('page.header.medRecord.edit')}</h1>
+            <h2>${springMacroRequestContext.getMessage('page.header.medRecord.edit')}</h2>
         <#else>
-            <h1>${springMacroRequestContext.getMessage('page.header.medRecord.new')}</h1>
+            <h2>${springMacroRequestContext.getMessage('page.header.medRecord.new')}</h2>
         </#if>
 
     </div>
     <div class="pull-right">
-        <a href="/medrecord/${(MedRecord.id)!''}">
-            <button type="submit"
-                    class="btn btn-success">${springMacroRequestContext.getMessage('page.button.medRecord.save')}</button>
-        </a>
+        <button type="submit"
+                class="btn btn-success">${springMacroRequestContext.getMessage('page.button.medRecord.save')}</button>
     </div>
 
     <div class="row">
     <#--Patient-->
         <div class="col-md-4">
+        <#--Personal Info -->
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">${springMacroRequestContext.getMessage('page.header.patient')}</h3>
@@ -80,6 +79,7 @@
                     </div>
                 </div>
             </div>
+        <#-- Address -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">${springMacroRequestContext.getMessage('page.header.patient.address')}
@@ -128,30 +128,34 @@
                 </div>
             </div>
         </div>
+    <#--End Patient-->
 
     <#-- Medical Record -->
         <div class="col-md-8">
-            <div class="form-group">
+            <@spring.formHiddenInput "MedRecord.id"/>
+<#--            <div class="form-group">
                 <label for="patient.firstName">${springMacroRequestContext.getMessage('page.field.patient.firstName')}</label>
                 <@spring.formInput "MedRecord.patient.firstName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.firstName')}' required autofocus" "text"/><@spring.showErrors "<br>"/>
             </div>
             <div class="form-group">
                 <label for="patient.lastName">${springMacroRequestContext.getMessage('page.field.patient.lastName')}</label>
                 <@spring.formInput "MedRecord.patient.lastName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.lastName')}' required" "text"/><@spring.showErrors "<br>"/>
-            </div>
+            </div>-->
         </div>
+    <#-- End of Medical Record -->
     </div>
 
     <div class="row">
         <div class="pull-right">
             <a href="/medrecords">
                 <button type="button"
-                        class="btn btn-danger">${springMacroRequestContext.getMessage('page.button.medRecord.cancel')}</button>
+                        class="btn btn-sm btn-danger">${springMacroRequestContext.getMessage('page.button.medRecord.cancel')}</button>
             </a>
-            <a href="/medrecord/${(MedRecord.id)!''}">
-                <button type="submit"
-                        class="btn btn-success">${springMacroRequestContext.getMessage('page.button.medRecord.save')}</button>
-            </a>
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+            <button type="submit"
+                    class="btn btn-success">${springMacroRequestContext.getMessage('page.button.medRecord.save')}</button>
         </div>
     </div>
 

@@ -7,14 +7,23 @@ import com.rozenkow.service.MedicalRecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -24,11 +33,21 @@ import java.util.Optional;
  */
 @Controller
 public class MedicalRecordController {
+  private static final String MEDICAL_RECORDS = "med_record/view.medical.records";
+  private static final String EDIT_MEDICAL_RECORD = "med_record/edit.medical.record";
+
   private final Logger logger = LoggerFactory.getLogger(MedicalRecordController.class);
 
   private final MedicalRecordService medicalRecordService;
   private final GeoService geoService;
   private final MessageSource messageSource;
+
+  @InitBinder
+  public void bindingPreparation(WebDataBinder binder) {
+    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+    CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
+    binder.registerCustomEditor(Date.class, dateEditor);
+  }
 
   @Autowired
   public MedicalRecordController(MedicalRecordService medicalRecordService, GeoService geoService, MessageSource
@@ -41,19 +60,46 @@ public class MedicalRecordController {
   @RequestMapping(path = "/medrecords", method = RequestMethod.GET)
   public String showMedicalRecords(Model model) {
     model.addAttribute("MedRecords", medicalRecordService.getRecords());
-    return "medical.records";
+    return MEDICAL_RECORDS;
   }
 
   @RequestMapping(path = {"/medrecord/{id}", "/medrecord"}, method = RequestMethod.GET)
-  public String newMedicalRecords(@PathVariable("id") Optional<String> id, Model model) {
+  public String loadOrCreateMedicalRecord(@PathVariable("id") Optional<String> id, Model model) {
+    logger.debug("loadOrCreateMedicalRecord(): id = {}", id);
     MedicalRecord medicalRecord = id.map(medicalRecordService::getRecord).orElseGet(MedicalRecord::new);
     model.addAttribute("MedRecord", medicalRecord);
     model.addAttribute("Sexes", getSexMap());
     model.addAttribute("Countries", geoService.getLocalizedCountries());
 
-    LocaleContextHolder.getLocale();
+    return EDIT_MEDICAL_RECORD;
+  }
 
-    return "edit.medical.record";
+  @RequestMapping(path = {"/medrecord"}, method = RequestMethod.POST)
+  public String saveMedicalRecord(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, BindingResult result,
+                                  RedirectAttributes redirectAttributes, Model model) {
+    logger.debug("saveMedicalRecord(): medicalRecord = {}", medicalRecord);
+
+    if (!result.hasErrors()) {
+      medicalRecordService.saveRecord(medicalRecord);
+
+      redirectAttributes.addFlashAttribute("css", "success");
+      redirectAttributes.addFlashAttribute("msgKey", "Success.saved");
+      return "redirect:/medrecord/" + medicalRecord.getId();
+    } else {
+      return EDIT_MEDICAL_RECORD;
+    }
+  }
+
+  @RequestMapping(path = {"/medrecord/{id}/delete"}, method = RequestMethod.POST)
+  public String deleteMedicalRecord(@PathVariable("id") String id, Model model) {
+    logger.debug("deleteMedicalRecord(): id = {}", id);
+    boolean removed = medicalRecordService.removeRecord(id);
+    if (removed) {
+      model.addAttribute("css", "info");
+      model.addAttribute("msgKey", "Success.removed");
+    }
+
+    return showMedicalRecords(model);
   }
 
   private Map<String, String> getSexMap() {

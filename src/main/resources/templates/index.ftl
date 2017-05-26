@@ -2,6 +2,6 @@
 
 <@layout.indexmaster titleKey="page.title.home">
 <div class="page-header">
-    <h1>${springMacroRequestContext.getMessage('page.header.welcome')}</h1>
+    <h2>${springMacroRequestContext.getMessage('page.header.welcome')}</h2>
 </div>
 </@layout.indexmaster>
