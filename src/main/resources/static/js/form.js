@@ -1,7 +1,11 @@
-function post(path, params, method) {
+function post(path, params, method, formId) {
     method = method || "post";
-
-    var form = document.createElement("form");
+    var form = null;
+    if (formId) {
+        form = document.getElementById(formId);
+    } else {
+        form = document.createElement("form");
+    }
     form.setAttribute("method", method);
     form.setAttribute("action", path);
 

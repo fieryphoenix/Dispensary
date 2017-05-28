@@ -25,6 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -67,11 +68,15 @@ public class MedicalRecordController {
   public String loadOrCreateMedicalRecord(@PathVariable("id") Optional<String> id, Model model) {
     logger.debug("loadOrCreateMedicalRecord(): id = {}", id);
     MedicalRecord medicalRecord = id.map(medicalRecordService::getRecord).orElseGet(MedicalRecord::new);
+    initRecordForEdit(model, medicalRecord);
+
+    return EDIT_MEDICAL_RECORD;
+  }
+
+  private void initRecordForEdit(Model model, MedicalRecord medicalRecord) {
     model.addAttribute("MedRecord", medicalRecord);
     model.addAttribute("Sexes", getSexMap());
     model.addAttribute("Countries", geoService.getLocalizedCountries());
-
-    return EDIT_MEDICAL_RECORD;
   }
 
   @RequestMapping(path = {"/medrecord"}, method = RequestMethod.POST)
@@ -100,6 +105,29 @@ public class MedicalRecordController {
     }
 
     return showMedicalRecords(model);
+  }
+
+  @RequestMapping(path = {"/medrecord/addPhone"}, method = RequestMethod.POST)
+  public String addPatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, Model model) {
+    logger.debug("addPatientPhone(): MedRecord = {}", medicalRecord);
+
+    medicalRecord.getPatient().getPhones().add("");
+    initRecordForEdit(model, medicalRecord);
+
+    return EDIT_MEDICAL_RECORD;
+  }
+
+  @RequestMapping(path = {"/medrecord/deletePhone/{phoneIndex}"}, method = RequestMethod.POST)
+  public String deletePatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable int
+      phoneIndex, Model model) {
+    logger.debug("deletePatientPhone(): phoneIndex={}, MedRecord = {}", phoneIndex, medicalRecord);
+    List<String> phones = medicalRecord.getPatient().getPhones();
+    if (phones.size() > phoneIndex) {
+      phones.remove(phoneIndex);
+    }
+    initRecordForEdit(model, medicalRecord);
+
+    return EDIT_MEDICAL_RECORD;
   }
 
   private Map<String, String> getSexMap() {

@@ -3,7 +3,7 @@
 
 <#assign layoutOut>
 
-<form class="form-horizontal" method="post" action="/medrecord" modelAttribute="MedRecord">
+<form id="MedRecordForm" class="form-horizontal" method="post" action="/medrecord" modelAttribute="MedRecord">
     <@spring.bind "MedRecord"/>
     <@spring.bind "Sexes"/>
     <@spring.bind "Countries"/>
@@ -125,6 +125,38 @@
                             </div>
                         </div>
                     </address>
+
+                <#-- Phones -->
+                    <div class="form-group">
+                        <label for="patient.phone"
+                               class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.patient.phones')}</label>
+                        <div class="col-sm-9">
+                            <div class="list-group col-sm-12">
+                                <#list MedRecord.patient.phones>
+                                    <#items as phone>
+                                        <div class="row">
+                                            <div class="col-sm-10 vcenter">
+                                                <@spring.formInput "MedRecord.patient.phones[${phone_index}]" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.phone')}'" "text"/><@spring.showErrors "<br>"/>
+                                                <#--@formatter:off-->
+                                            </div><!--
+                                            --><div class="col-sm-2 vcenter">
+                                            <#--@formatter:on-->
+                                                <a href="#"
+                                                   onclick="this.disabled=true;post('/medrecord/deletePhone/${phone_index}', null, 'post', 'MedRecordForm')">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </a>
+                                        </div>
+                                        </div>
+                                    </#items>
+                                </#list>
+                            </div>
+                            <button type="button" class="btn btn-xs"
+                                    onclick="this.disabled=true;post('/medrecord/addPhone', null, 'post', 'MedRecordForm')">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add New
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
