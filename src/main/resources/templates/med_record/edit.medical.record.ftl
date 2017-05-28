@@ -10,7 +10,7 @@
     <@spring.bind "Ultrasounds"/>
 
     <div class="page-header">
-        <#if (MedRecord.id)??>
+        <#if ((MedRecord.id!"")?length > 0) >
             <h2><@spring.message "page.header.medRecord.edit"/></h2>
         <#else>
             <h2><@spring.message "page.header.medRecord.new"/></h2>
