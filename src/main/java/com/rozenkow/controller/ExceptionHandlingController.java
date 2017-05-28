@@ -29,7 +29,7 @@ public class ExceptionHandlingController {
   // consider subclassing ExceptionHandlerExceptionResolver (see below).
   @ExceptionHandler(Exception.class)
   public ModelAndView handleError(HttpServletRequest req, Exception ex) {
-    logger.error("Request: " + req.getRequestURL() + " raised " + ex);
+    logger.error("Request: URL = {} raised = {}", req.getRequestURL(), ex);
 
     ModelAndView mav = new ModelAndView();
     mav.addObject("exception", ex);

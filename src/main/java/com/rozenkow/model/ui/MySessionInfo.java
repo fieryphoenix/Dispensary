@@ -1,4 +1,4 @@
-package com.rozenkow.model;
+package com.rozenkow.model.ui;
 
 import com.rozenkow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

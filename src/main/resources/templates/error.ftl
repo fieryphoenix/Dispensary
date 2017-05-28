@@ -5,9 +5,8 @@
 <div class="page-header">
 
     <h2>${springMacroRequestContext.getMessage('page.header.error')}</h2>
-    <p>print nice error</p>
     <p>
-    ${exception!''}
+    ${exception!'Unknown error'}
     </p>
 </div>
 <form></form>

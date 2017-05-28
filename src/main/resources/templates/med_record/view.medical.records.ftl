@@ -39,12 +39,12 @@
                                 <td>${record.patient.fullName}</td>
                                 <td>${record.createdDate?datetime}</td>
                                 <td>
-                                    <a href="/medrecord/${(record.id)}">
+                                    <a href="/medrecord/load/${(record.id)}/view">
                                         <button type="button" class="btn btn-xs btn-default">
                                             <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.view')}
                                         </button>
                                     </a>
-                                    <a href="/medrecord/${(record.id)}">
+                                    <a href="/medrecord/load/${(record.id)}/edit">
                                         <button type="button" class="btn btn-xs btn-success">
                                             <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.edit')}
                                         </button>

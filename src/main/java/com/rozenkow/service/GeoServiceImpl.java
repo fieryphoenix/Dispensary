@@ -1,5 +1,6 @@
 package com.rozenkow.service;
 
+import com.rozenkow.util.MapUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,7 @@ public class GeoServiceImpl implements GeoService {
 
       countries.put(locale.getCountry(), locale.getDisplayCountry(displayLocale));
     }
-    countries = countries.entrySet().stream()
-        .sorted((o1, o2) -> o1.getValue().compareToIgnoreCase(o2.getValue()))
-        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (u, u2) -> u, LinkedHashMap::new));
+    countries = MapUtils.sortMapByValue(countries);
     return countries;
   }
 }

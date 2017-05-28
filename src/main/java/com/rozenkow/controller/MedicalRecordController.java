@@ -3,14 +3,15 @@ package com.rozenkow.controller;
 import com.rozenkow.model.Disease;
 import com.rozenkow.model.MedicalRecord;
 import com.rozenkow.model.Sex;
+import com.rozenkow.model.Ultrasound;
+import com.rozenkow.model.UltrasoundType;
+import com.rozenkow.service.DictionaryService;
 import com.rozenkow.service.GeoService;
 import com.rozenkow.service.MedicalRecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,21 +42,21 @@ public class MedicalRecordController {
 
   private final MedicalRecordService medicalRecordService;
   private final GeoService geoService;
-  private final MessageSource messageSource;
+  private final DictionaryService dictionaryService;
 
   @InitBinder
   public void bindingPreparation(WebDataBinder binder) {
-    DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
     binder.registerCustomEditor(Date.class, dateEditor);
   }
 
   @Autowired
-  public MedicalRecordController(MedicalRecordService medicalRecordService, GeoService geoService, MessageSource
-      messageSource) {
+  public MedicalRecordController(MedicalRecordService medicalRecordService, GeoService geoService, DictionaryService
+      dictionaryService) {
     this.medicalRecordService = medicalRecordService;
     this.geoService = geoService;
-    this.messageSource = messageSource;
+    this.dictionaryService = dictionaryService;
   }
 
   @RequestMapping(path = "/medrecords", method = RequestMethod.GET)
@@ -65,19 +65,26 @@ public class MedicalRecordController {
     return MEDICAL_RECORDS;
   }
 
-  @RequestMapping(path = {"/medrecord/{id}", "/medrecord"}, method = RequestMethod.GET)
-  public String loadOrCreateMedicalRecord(@PathVariable("id") Optional<String> id, Model model) {
-    logger.debug("loadOrCreateMedicalRecord(): id = {}", id);
+  @RequestMapping(path = {"/medrecord/load/{id}/{viewMode}", "/medrecord"}, method = RequestMethod.GET)
+  public String loadOrCreateMedicalRecord(@PathVariable(name = "id", required = false) Optional<String> id,
+                                          @PathVariable(name = "viewMode", required = false) String
+                                              viewMode, Model model) {
+    logger.debug("loadOrCreateMedicalRecord(): id = {}, viewMode = {}", id, viewMode);
     MedicalRecord medicalRecord = id.map(medicalRecordService::getRecord).orElseGet(MedicalRecord::new);
-    initRecordForEdit(model, medicalRecord);
+    initRecordForEdit(model, medicalRecord, viewMode);
 
     return EDIT_MEDICAL_RECORD;
   }
 
-  private void initRecordForEdit(Model model, MedicalRecord medicalRecord) {
+  private void initRecordForEdit(Model model, MedicalRecord medicalRecord, String readOnly) {
+    final Map<String, String> sexesMap = dictionaryService.buildLocalizedMap("page.field.sex.", Sex.class);
+    final Map<String, String> ultrasoundTypesMap = dictionaryService.buildLocalizedMap("page.field.ultrasound.type.",
+        UltrasoundType.class);
     model.addAttribute("MedRecord", medicalRecord);
-    model.addAttribute("Sexes", getSexMap());
+    model.addAttribute("Sexes", sexesMap);
     model.addAttribute("Countries", geoService.getLocalizedCountries());
+    model.addAttribute("Ultrasounds", ultrasoundTypesMap);
+    model.addAttribute("readOnlyForm", "view".equalsIgnoreCase(readOnly) || "true".equalsIgnoreCase(readOnly));
   }
 
   @RequestMapping(path = {"/medrecord"}, method = RequestMethod.POST)
@@ -90,7 +97,7 @@ public class MedicalRecordController {
 
       redirectAttributes.addFlashAttribute("css", "success");
       redirectAttributes.addFlashAttribute("msgKey", "Success.saved");
-      return "redirect:/medrecord/" + medicalRecord.getId();
+      return "redirect:/medrecord/load/" + medicalRecord.getId() + "/edit";
     } else {
       return EDIT_MEDICAL_RECORD;
     }
@@ -109,58 +116,76 @@ public class MedicalRecordController {
   }
 
   @RequestMapping(path = {"/medrecord/addPhone"}, method = RequestMethod.POST)
-  public String addPatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, Model model) {
+  public String addPatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute
+      ("readOnlyForm") String readOnly, Model model) {
     logger.debug("addPatientPhone(): MedRecord = {}", medicalRecord);
 
     medicalRecord.getPatient().getPhones().add("");
-    initRecordForEdit(model, medicalRecord);
+    initRecordForEdit(model, medicalRecord, readOnly);
 
     return EDIT_MEDICAL_RECORD;
   }
 
   @RequestMapping(path = {"/medrecord/deletePhone/{index}"}, method = RequestMethod.POST)
-  public String deletePatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
-      phoneIndex, Model model) {
+  public String deletePatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute
+      ("readOnlyForm") String readOnly, @PathVariable("index") int
+                                       phoneIndex, Model model) {
     logger.debug("deletePatientPhone(): phoneIndex={}, MedRecord = {}", phoneIndex, medicalRecord);
     List<String> phones = medicalRecord.getPatient().getPhones();
     if (phones.size() > phoneIndex) {
       phones.remove(phoneIndex);
     }
-    initRecordForEdit(model, medicalRecord);
+    initRecordForEdit(model, medicalRecord, readOnly);
 
     return EDIT_MEDICAL_RECORD;
   }
 
-
   @RequestMapping(path = {"/medrecord/addDisease"}, method = RequestMethod.POST)
-  public String addDisease(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, Model model) {
+  public String addDisease(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute("readOnlyForm")
+      String readOnly, Model model) {
     logger.debug("addDisease(): MedRecord = {}", medicalRecord);
 
     medicalRecord.getDiseases().add(new Disease());
-    initRecordForEdit(model, medicalRecord);
+    initRecordForEdit(model, medicalRecord, readOnly);
 
     return EDIT_MEDICAL_RECORD;
   }
 
   @RequestMapping(path = {"/medrecord/deleteDisease/{index}"}, method = RequestMethod.POST)
   public String deleteDisease(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
-      index, Model model) {
+      index, @ModelAttribute("readOnlyForm") String readOnly, Model model) {
     logger.debug("deleteDisease(): index={}, MedRecord = {}", index, medicalRecord);
     List<Disease> diseases = medicalRecord.getDiseases();
     if (diseases.size() > index) {
       diseases.remove(index);
     }
-    initRecordForEdit(model, medicalRecord);
+    initRecordForEdit(model, medicalRecord, readOnly);
 
     return EDIT_MEDICAL_RECORD;
   }
 
-  private Map<String, String> getSexMap() {
-    Map<String, String> sexes = new LinkedHashMap<>();
-    sexes.put(Sex.MALE.name(), messageSource.getMessage("page.field.sex.male", null, LocaleContextHolder.getLocale()));
-    sexes.put(Sex.FEMALE.name(), messageSource.getMessage("page.field.sex.female", null, LocaleContextHolder
-        .getLocale()));
 
-    return sexes;
+  @RequestMapping(path = {"/medrecord/addUltrasound"}, method = RequestMethod.POST)
+  public String addUltrasound(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute
+      ("readOnlyForm") String readOnly, Model model) {
+    logger.debug("addUltrasound(): MedRecord = {}", medicalRecord);
+
+    medicalRecord.getUltrasounds().add(new Ultrasound());
+    initRecordForEdit(model, medicalRecord, readOnly);
+
+    return EDIT_MEDICAL_RECORD;
+  }
+
+  @RequestMapping(path = {"/medrecord/deleteUltrasound/{index}"}, method = RequestMethod.POST)
+  public String deleteUltrasound(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
+      index, @ModelAttribute("readOnlyForm") String readOnly, Model model) {
+    logger.debug("deleteUltrasound(): index={}, MedRecord = {}", index, medicalRecord);
+    List<Ultrasound> ultrasounds = medicalRecord.getUltrasounds();
+    if (ultrasounds.size() > index) {
+      ultrasounds.remove(index);
+    }
+    initRecordForEdit(model, medicalRecord, readOnly);
+
+    return EDIT_MEDICAL_RECORD;
   }
 }

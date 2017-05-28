@@ -23,6 +23,18 @@ function post(path, params, method, formId) {
     document.body.appendChild(form);
     form.submit();
 }
+
+function disableReadOnlyFields() {
+    var condition = $('#readOnlyForm').val();
+    if (condition !== "" && condition === 'true') {
+        $('input,select').prop("disabled", "true");
+    }
+}
+
+window.onload = function () {
+    disableReadOnlyFields();
+};
+
 /**
  * Created by user on 5/26/2017.
  */

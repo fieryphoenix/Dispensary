@@ -1,21 +1,21 @@
 package com.rozenkow.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by Poul Rozenkow.
  */
 public class Ultrasound {
-  private String note;
+  private String notes;
   private UltrasoundType type;
-  private LocalDate recordsDate;
+  private Date recordDate;
 
-  public String getNote() {
-    return note;
+  public String getNotes() {
+    return notes;
   }
 
-  public void setNote(String note) {
-    this.note = note;
+  public void setNotes(String notes) {
+    this.notes = notes;
   }
 
   public UltrasoundType getType() {
@@ -26,20 +26,20 @@ public class Ultrasound {
     this.type = type;
   }
 
-  public LocalDate getRecordsDate() {
-    return recordsDate;
+  public Date getRecordDate() {
+    return recordDate;
   }
 
-  public void setRecordsDate(LocalDate recordsDate) {
-    this.recordsDate = recordsDate;
+  public void setRecordDate(Date recordDate) {
+    this.recordDate = recordDate;
   }
 
   @Override
   public String toString() {
     return "Ultrasound{" +
-           "note='" + note + '\'' +
+           "notes='" + notes + '\'' +
            ", type=" + type +
-           ", recordsDate=" + recordsDate +
+           ", recordDate=" + recordDate +
            '}';
   }
 }
