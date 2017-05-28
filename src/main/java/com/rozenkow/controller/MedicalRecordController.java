@@ -5,6 +5,7 @@ import com.rozenkow.model.MedicalRecord;
 import com.rozenkow.model.Sex;
 import com.rozenkow.model.Ultrasound;
 import com.rozenkow.model.UltrasoundType;
+import com.rozenkow.model.ui.SearchCriteria;
 import com.rozenkow.service.DictionaryService;
 import com.rozenkow.service.GeoService;
 import com.rozenkow.service.MedicalRecordService;
@@ -61,7 +62,17 @@ public class MedicalRecordController {
 
   @RequestMapping(path = "/medrecords", method = RequestMethod.GET)
   public String showMedicalRecords(Model model) {
-    model.addAttribute("MedRecords", medicalRecordService.getRecords());
+    List<MedicalRecord> records = medicalRecordService.getRecords();
+    model.addAttribute("MedRecords", records);
+    model.addAttribute("SearchCriteria", new SearchCriteria());
+    return MEDICAL_RECORDS;
+  }
+
+  @RequestMapping(path = "/medrecords", method = RequestMethod.POST)
+  public String searchMedicalRecords(@ModelAttribute("SearchCriteria") SearchCriteria searchCriteria, Model model) {
+    List<MedicalRecord> medicalRecords = medicalRecordService.searchRecords(searchCriteria);
+    model.addAttribute("MedRecords", medicalRecords);
+    model.addAttribute("SearchCriteria", searchCriteria);
     return MEDICAL_RECORDS;
   }
 

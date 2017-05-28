@@ -1,5 +1,7 @@
 package com.rozenkow.model;
 
+import org.springframework.data.mongodb.core.index.TextIndexed;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,8 +10,11 @@ import java.util.List;
  * Created by Poul Rozenkow.
  */
 public class Patient {
+  @TextIndexed
   private String firstName;
+  @TextIndexed
   private String lastName;
+  @TextIndexed
   private String middleName;
   private String passportNumber;
   private String passportSeries;

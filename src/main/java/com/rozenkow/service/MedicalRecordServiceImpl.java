@@ -2,8 +2,10 @@ package com.rozenkow.service;
 
 import com.rozenkow.db.MedicalRecordRepository;
 import com.rozenkow.model.MedicalRecord;
+import com.rozenkow.model.ui.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +54,16 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public List<MedicalRecord> searchRecords(SearchCriteria searchCriteria) {
+    String patient = searchCriteria.getPatient();
+    TextCriteria patientCriteria = TextCriteria.forDefaultLanguage().matchingAny(patient);
+    List<MedicalRecord> searchedRecords = medicalRecordRepository
+        .findByPatientFirstNameOrPatientLastNameOrPatientMiddleName(patient, patient, patient,
+            patientCriteria);
+//    medicalRecordRepository.findAll(patientCriteria, )
+    return searchedRecords;
   }
 }
