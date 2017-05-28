@@ -1,5 +1,6 @@
 package com.rozenkow.controller;
 
+import com.rozenkow.model.Disease;
 import com.rozenkow.model.MedicalRecord;
 import com.rozenkow.model.Sex;
 import com.rozenkow.service.GeoService;
@@ -117,13 +118,37 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/medrecord/deletePhone/{phoneIndex}"}, method = RequestMethod.POST)
-  public String deletePatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable int
+  @RequestMapping(path = {"/medrecord/deletePhone/{index}"}, method = RequestMethod.POST)
+  public String deletePatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
       phoneIndex, Model model) {
     logger.debug("deletePatientPhone(): phoneIndex={}, MedRecord = {}", phoneIndex, medicalRecord);
     List<String> phones = medicalRecord.getPatient().getPhones();
     if (phones.size() > phoneIndex) {
       phones.remove(phoneIndex);
+    }
+    initRecordForEdit(model, medicalRecord);
+
+    return EDIT_MEDICAL_RECORD;
+  }
+
+
+  @RequestMapping(path = {"/medrecord/addDisease"}, method = RequestMethod.POST)
+  public String addDisease(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, Model model) {
+    logger.debug("addDisease(): MedRecord = {}", medicalRecord);
+
+    medicalRecord.getDiseases().add(new Disease());
+    initRecordForEdit(model, medicalRecord);
+
+    return EDIT_MEDICAL_RECORD;
+  }
+
+  @RequestMapping(path = {"/medrecord/deleteDisease/{index}"}, method = RequestMethod.POST)
+  public String deleteDisease(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
+      index, Model model) {
+    logger.debug("deleteDisease(): index={}, MedRecord = {}", index, medicalRecord);
+    List<Disease> diseases = medicalRecord.getDiseases();
+    if (diseases.size() > index) {
+      diseases.remove(index);
     }
     initRecordForEdit(model, medicalRecord);
 

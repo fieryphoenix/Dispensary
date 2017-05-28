@@ -24,10 +24,10 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Record Number</th>
-                        <th>Patient Name</th>
-                        <th>Created</th>
-                        <th>Actions</th>
+                        <th>${springMacroRequestContext.getMessage('page.field.medRecord.number')}</th>
+                        <th>${springMacroRequestContext.getMessage('page.field.patient.fullName')}</th>
+                        <th>${springMacroRequestContext.getMessage('page.field.medRecord.created')}</th>
+                        <th>${springMacroRequestContext.getMessage('page.actions')}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -41,17 +41,17 @@
                                 <td>
                                     <a href="/medrecord/${(record.id)}">
                                         <button type="button" class="btn btn-xs btn-default">
-                                            <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;View
+                                            <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.view')}
                                         </button>
                                     </a>
                                     <a href="/medrecord/${(record.id)}">
                                         <button type="button" class="btn btn-xs btn-success">
-                                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+                                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.edit')}
                                         </button>
                                     </a>
                                     <button type="button" class="btn btn-xs btn-danger"
                                             onclick="this.disabled=true;post('/medrecord/${record.id}/delete', {'${_csrf.parameterName}':'${_csrf.token}'})">
-                                        <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
+                                        <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.delete')}
                                     </button>
                                 </td>
                             </tr>
@@ -84,46 +84,6 @@
         </#if>
     </div>
 
-
-     
-    <div class="modal fade" id="myModal" role="dialog">
-           
-        <div class="modal-dialog">
-
-                  <!-- Modal content-->
-                 
-            <div class="modal-content">
-                       
-                <div class="modal-header">
-                             
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 style="color:red;">Remove Medical Record</h4>
-                           
-                </div>
-                       
-                <div class="modal-body">
-                             
-                    <form role="form" method="delete" action="/medrecord">
-                                   
-                                   
-                        <button type="submit" class="btn btn-default btn-success btn-block"><span
-                                class="glyphicon glyphicon-off"></span> Login
-                        </button>
-                                 
-                    </form>
-                           
-                </div>
-                       
-                <div class="modal-footer">
-                              <p>footer</p>
-                           
-                </div>
-                     
-            </div>
-               
-        </div>
-         
-    </div>
 </form>
 
 </#assign>

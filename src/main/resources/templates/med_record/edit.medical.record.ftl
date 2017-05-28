@@ -16,10 +16,6 @@
         </#if>
 
     </div>
-    <div class="pull-right">
-        <button type="submit"
-                class="btn btn-success">${springMacroRequestContext.getMessage('page.button.medRecord.save')}</button>
-    </div>
 
     <div class="row">
     <#--Patient-->
@@ -152,27 +148,71 @@
                             </div>
                             <button type="button" class="btn btn-xs"
                                     onclick="this.disabled=true;post('/medrecord/addPhone', null, 'post', 'MedRecordForm')">
-                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add New
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.addNew')}
                             </button>
                         </div>
                     </div>
 
                 </div>
-            </div>
+            </div> <!-- end of Address -->
         </div>
     <#--End Patient-->
 
     <#-- Medical Record -->
         <div class="col-md-8">
             <@spring.formHiddenInput "MedRecord.id"/>
-<#--            <div class="form-group">
-                <label for="patient.firstName">${springMacroRequestContext.getMessage('page.field.patient.firstName')}</label>
-                <@spring.formInput "MedRecord.patient.firstName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.firstName')}' required autofocus" "text"/><@spring.showErrors "<br>"/>
-            </div>
-            <div class="form-group">
-                <label for="patient.lastName">${springMacroRequestContext.getMessage('page.field.patient.lastName')}</label>
-                <@spring.formInput "MedRecord.patient.lastName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.lastName')}' required" "text"/><@spring.showErrors "<br>"/>
-            </div>-->
+        <#-- Deseases -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">${springMacroRequestContext.getMessage('page.header.patient.diseases')}</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>${springMacroRequestContext.getMessage('page.field.disease.from')}</th>
+                            <th>${springMacroRequestContext.getMessage('page.field.disease.to')}</th>
+                            <th>${springMacroRequestContext.getMessage('page.field.disease.name')}</th>
+                            <th>${springMacroRequestContext.getMessage('page.field.disease.notes')}</th>
+                            <th>${springMacroRequestContext.getMessage('page.actions')}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <#list MedRecord.diseases>
+                                <#items as disease>
+                                <tr>
+                                    <td>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].from" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.from')}' required" "date"/><@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.to')}'" "date"/><@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].name" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.name')}' required" "text"/><@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <@spring.formTextarea "MedRecord.diseases[${disease_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.notes')}'" /><@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <a href="#"
+                                           onclick="this.disabled=true;post('/medrecord/deleteDisease/${disease_index}', null, 'post', 'MedRecordForm')">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </#items>
+                            </#list>
+
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-xs"
+                            onclick="this.disabled=true;post('/medrecord/addDisease', null, 'post', 'MedRecordForm')">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.addNew')}
+                    </button>
+                </div>
+            </div> <!-- end of Diseases -->
+
+
         </div>
     <#-- End of Medical Record -->
     </div>
@@ -181,13 +221,13 @@
         <div class="pull-right">
             <a href="/medrecords">
                 <button type="button"
-                        class="btn btn-sm btn-danger">${springMacroRequestContext.getMessage('page.button.medRecord.cancel')}</button>
+                        class="btn btn-sm btn-danger">${springMacroRequestContext.getMessage('page.button.cancel')}</button>
             </a>
             <input type="hidden"
                    name="${_csrf.parameterName}"
                    value="${_csrf.token}"/>
             <button type="submit"
-                    class="btn btn-success">${springMacroRequestContext.getMessage('page.button.medRecord.save')}</button>
+                    class="btn btn-success">${springMacroRequestContext.getMessage('page.button.save')}</button>
         </div>
     </div>
 

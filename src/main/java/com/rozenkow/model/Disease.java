@@ -1,16 +1,20 @@
 package com.rozenkow.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by Poul Rozenkow.
  */
 public class Disease implements Serializable {
   private String name;
-  private LocalDate from;
-  private LocalDate to;
+  private Date from;
+  private Date to;
   private String notes;
+
+  public Disease() {
+    from = new Date();
+  }
 
   public String getName() {
     return name;
@@ -20,19 +24,19 @@ public class Disease implements Serializable {
     this.name = name;
   }
 
-  public LocalDate getFrom() {
+  public Date getFrom() {
     return from;
   }
 
-  public void setFrom(LocalDate from) {
+  public void setFrom(Date from) {
     this.from = from;
   }
 
-  public LocalDate getTo() {
+  public Date getTo() {
     return to;
   }
 
-  public void setTo(LocalDate to) {
+  public void setTo(Date to) {
     this.to = to;
   }
 
