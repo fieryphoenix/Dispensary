@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -64,14 +65,14 @@ public class MedicalRecordController {
   public String showMedicalRecords(Model model) {
     List<MedicalRecord> records = medicalRecordService.getRecords();
     model.addAttribute("MedRecords", records);
-    model.addAttribute("SearchCriteria", new SearchCriteria());
+    model.addAttribute("SearchCriteria", new SearchCriteria("created"));
     return MEDICAL_RECORDS;
   }
 
   @RequestMapping(path = "/medrecords", method = RequestMethod.POST)
   public String searchMedicalRecords(@ModelAttribute("SearchCriteria") SearchCriteria searchCriteria, Model model) {
-    List<MedicalRecord> medicalRecords = medicalRecordService.searchRecords(searchCriteria);
-    model.addAttribute("MedRecords", medicalRecords);
+    Page<MedicalRecord> medicalRecords = medicalRecordService.searchRecords(searchCriteria);
+    model.addAttribute("MedRecords", medicalRecords.getContent());
     model.addAttribute("SearchCriteria", searchCriteria);
     return MEDICAL_RECORDS;
   }
@@ -119,7 +120,7 @@ public class MedicalRecordController {
     logger.debug("deleteMedicalRecord(): id = {}", id);
     boolean removed = medicalRecordService.removeRecord(id);
     if (removed) {
-      model.addAttribute("css", "info");
+      model.addAttribute("css", "success");
       model.addAttribute("msgKey", "Success.removed");
     }
 

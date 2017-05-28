@@ -81,7 +81,7 @@ public class UserController {
 
   @RequestMapping(path = "/users", method = RequestMethod.GET)
   public String showMedicalRecords(Model model) {
-    SearchCriteria searchCriteria = new SearchCriteria();
+    SearchCriteria searchCriteria = new SearchCriteria("username");
     List<User> records = userService.searchRecords(searchCriteria);
     model.addAttribute("Users", records);
     model.addAttribute("SearchCriteria", searchCriteria);

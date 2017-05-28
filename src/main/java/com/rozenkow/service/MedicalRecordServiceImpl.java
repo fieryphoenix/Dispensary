@@ -3,7 +3,9 @@ package com.rozenkow.service;
 import com.rozenkow.db.MedicalRecordRepository;
 import com.rozenkow.model.MedicalRecord;
 import com.rozenkow.model.ui.SearchCriteria;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Service;
@@ -57,12 +59,15 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
   }
 
   @Override
-  public List<MedicalRecord> searchRecords(SearchCriteria searchCriteria) {
+  public Page<MedicalRecord> searchRecords(SearchCriteria searchCriteria) {
     String patient = searchCriteria.getFullTextField1();
+    if (StringUtils.isBlank(patient)) {
+      return medicalRecordRepository.findAll(searchCriteria);
+    }
     TextCriteria patientCriteria = TextCriteria.forDefaultLanguage().matchingAny(patient);
-    List<MedicalRecord> searchedRecords = medicalRecordRepository
+    Page<MedicalRecord> searchedRecords = medicalRecordRepository
         .findByPatientFirstNameOrPatientLastNameOrPatientMiddleName(patient, patient, patient,
-            patientCriteria);
+            patientCriteria, searchCriteria);
     return searchedRecords;
   }
 }
