@@ -21,6 +21,9 @@
                 <li>
                     <a href="<@spring.url '/medrecords'/>">${springMacroRequestContext.getMessage('page.nav.medRecords')}</a>
                 </li>
+                <li>
+                    <a href="<@spring.url '/users'/>">${springMacroRequestContext.getMessage('page.nav.users')}</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

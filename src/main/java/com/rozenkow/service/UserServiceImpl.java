@@ -2,6 +2,7 @@ package com.rozenkow.service;
 
 import com.rozenkow.db.UserRepository;
 import com.rozenkow.model.User;
+import com.rozenkow.model.ui.SearchCriteria;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
 
 import static com.rozenkow.util.EncryptUtils.createHashSaltForPassword;
 
@@ -51,6 +53,16 @@ class UserServiceImpl implements UserService {
     User userToSave = new User(null, user.getUsername(), hashAndSalt.getFirst(), hashAndSalt.getSecond(), user
         .getDisplayName());
     userRepository.save(userToSave);
+  }
+
+  @Override
+  public List<User> searchRecords(SearchCriteria searchCriteria) {
+    return userRepository.findAll(); //fixme
+  }
+
+  @Override
+  public User getById(String id) {
+    return userRepository.findOne(id);
   }
 
   @Override

@@ -58,12 +58,11 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
 
   @Override
   public List<MedicalRecord> searchRecords(SearchCriteria searchCriteria) {
-    String patient = searchCriteria.getPatient();
+    String patient = searchCriteria.getFullTextField1();
     TextCriteria patientCriteria = TextCriteria.forDefaultLanguage().matchingAny(patient);
     List<MedicalRecord> searchedRecords = medicalRecordRepository
         .findByPatientFirstNameOrPatientLastNameOrPatientMiddleName(patient, patient, patient,
             patientCriteria);
-//    medicalRecordRepository.findAll(patientCriteria, )
     return searchedRecords;
   }
 }

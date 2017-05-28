@@ -9,19 +9,19 @@ import java.io.Serializable;
  * Created by Poul Rozenkow.
  */
 public class SearchCriteria implements Serializable, Pageable {
-  private String patient;
+  private String fullTextField1;
   private String order = "asc";
   private Integer currentPage = 1;
   private Integer totalPages = 1;
   private boolean hasNext = false;
   private boolean hasPrev = false;
 
-  public String getPatient() {
-    return patient;
+  public String getFullTextField1() {
+    return fullTextField1;
   }
 
-  public void setPatient(String patient) {
-    this.patient = patient;
+  public void setFullTextField1(String fullTextField1) {
+    this.fullTextField1 = fullTextField1;
   }
 
   public String getOrder() {
@@ -107,7 +107,7 @@ public class SearchCriteria implements Serializable, Pageable {
   @Override
   public String toString() {
     return "SearchCriteria{" +
-           "patient='" + patient + '\'' +
+           "fullTextField1='" + fullTextField1 + '\'' +
            ", order='" + order + '\'' +
            ", currentPage=" + currentPage +
            ", totalPages=" + totalPages +

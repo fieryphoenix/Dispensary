@@ -3,12 +3,12 @@
 
 <#assign layoutOut>
 
-<form class="form-medrecords" method="post" action="/medrecords">
-    <@spring.bind "MedRecords"/>
+<form class="form-medrecords" method="post" action="/users">
+    <@spring.bind "Users"/>
     <@spring.bind "SearchCriteria"/>
 
     <div class="page-header">
-        <h2>${springMacroRequestContext.getMessage('page.header.medRecords')}</h2>
+        <h2>${springMacroRequestContext.getMessage('page.header.users')}</h2>
 
     </div>
 
@@ -29,9 +29,9 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label for="patient"
-                                   class="col-sm-3 control-label"><@spring.message "page.header.patient"/></label>
+                                   class="col-sm-3 control-label"><@spring.message "page.header.username"/></label>
                             <div class="col-sm-9">
-                                <@spring.formInput "SearchCriteria.fullTextField1" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.fullName')}'" "text"/><@spring.showErrors "<br>"/>
+                                <@spring.formInput "SearchCriteria.fullTextField1" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.user')}'" "text"/><@spring.showErrors "<br>"/>
                             </div>
                         </div>
                     </div>
@@ -42,9 +42,9 @@
 
     <div class="row">
         <div class="pull-right">
-            <a href="/medrecord">
+            <a href="/users">
                 <button type="button"
-                        class="btn btn-primary">${springMacroRequestContext.getMessage('page.button.medRecord.register')}</button>
+                        class="btn btn-primary"><@spring.message "page.button.user.register"/></button>
             </a>
         </div>
     </div>
@@ -57,33 +57,31 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>${springMacroRequestContext.getMessage('page.field.medRecord.number')}</th>
-                        <th>${springMacroRequestContext.getMessage('page.field.patient.fullName')}</th>
-                        <th>${springMacroRequestContext.getMessage('page.field.medRecord.created')}</th>
-                        <th>${springMacroRequestContext.getMessage('page.actions')}</th>
+                        <th><@spring.message "page.field.user.name"/></th>
+                        <th><@spring.message "page.field.user.displayName"/></th>
+                        <th><@spring.message "page.actions"/></th>
                     </tr>
                     </thead>
                     <tbody>
-                        <#list MedRecords>
-                            <#items as record>
+                        <#list Users>
+                            <#items as user>
                             <tr>
-                                <td>${record?counter}</td>
-                                <td>${record.number}</td>
-                                <td>${record.patient.fullName}</td>
-                                <td>${record.createdDate?datetime}</td>
+                                <td>${user?counter}</td>
+                                <td>${user.username}</td>
+                                <td>${user.displayName}</td>
                                 <td>
-                                    <a href="/medrecord/load/${(record.id)}/view">
+                                    <a href="/user/load/${(user.id)}/view">
                                         <button type="button" class="btn btn-xs btn-default">
                                             <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.view')}
                                         </button>
                                     </a>
-                                    <a href="/medrecord/load/${(record.id)}/edit">
+                                    <a href="/user/load/${(user.id)}/edit">
                                         <button type="button" class="btn btn-xs btn-success">
                                             <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.edit')}
                                         </button>
                                     </a>
                                     <button type="button" class="btn btn-xs btn-danger"
-                                            onclick="this.disabled=true;post('/medrecord/${record.id}/delete', {'${_csrf.parameterName}':'${_csrf.token}'})">
+                                            onclick="this.disabled=true;post('/user/${user.id}/delete', {'${_csrf.parameterName}':'${_csrf.token}'})">
                                         <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.delete')}
                                     </button>
                                 </td>
@@ -95,8 +93,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <#if MedRecords?size gt 0>
+<#--    <div class="row">
+        <#if Users?size gt 0>
             <ul class="pagination">
                 <li>
                     <a href="#">Prev</a>
@@ -115,7 +113,7 @@
                 </li>
             </ul>
         </#if>
-    </div>
+    </div>-->
 
     <input type="hidden"
            name="${_csrf.parameterName}"
@@ -124,4 +122,4 @@
 
 </#assign>
 
-<@layout.indexmaster  nestedOut="${layoutOut}" titleKey="page.title.medRecords"/>
+<@layout.indexmaster  nestedOut="${layoutOut}" titleKey="page.title.users"/>
