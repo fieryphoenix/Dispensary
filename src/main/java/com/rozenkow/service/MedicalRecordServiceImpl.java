@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,10 +63,12 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
     if (StringUtils.isBlank(patient)) {
       return medicalRecordRepository.findAll(searchCriteria);
     }
-    TextCriteria patientCriteria = TextCriteria.forDefaultLanguage().matchingAny(patient);
+//    TextCriteria patientCriteria = TextCriteria.forDefaultLanguage().matchingPhrase(patient);
     Page<MedicalRecord> searchedRecords = medicalRecordRepository
-        .findByPatientFirstNameOrPatientLastNameOrPatientMiddleName(patient, patient, patient,
-            patientCriteria, searchCriteria);
+        .findByPatientFirstNameContainsIgnoreCaseOrPatientLastNameContainsIgnoreCaseOrPatientMiddleNameContainsIgnoreCase
+            (patient, patient, patient,
+                searchCriteria);
+//    Page<MedicalRecord> searchedRecords = medicalRecordRepository.findAllBy(patientCriteria, searchCriteria);
     return searchedRecords;
   }
 }

@@ -190,7 +190,7 @@
                                         <@spring.formInput "MedRecord.diseases[${disease_index}].from" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.from')}' required" "date"/><@spring.showErrors "<br>"/>
                                     </td>
                                     <td>
-                                        <@spring.formInput "MedRecord.diseases[${disease_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.to')}" "date"/><@spring.showErrors "<br>"/>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.to')}'" "date"/><@spring.showErrors "<br>"/>
                                     </td>
                                     <td>
                                         <@spring.formInput "MedRecord.diseases[${disease_index}].name" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.name')}' required" "text"/><@spring.showErrors "<br>"/>
@@ -209,7 +209,6 @@
                                 </tr>
                                 </#items>
                             </#list>
-
                         </tbody>
                     </table>
                     <#if !readOnlyForm>

@@ -12,8 +12,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MedicalRecordRepository extends MongoRepository<MedicalRecord, String> {
-  Page<MedicalRecord> findByPatientFirstNameOrPatientLastNameOrPatientMiddleName(String firstName, String lastName,
-                                                                                 String middleName, TextCriteria
-                                                                                     patientCriteria, Pageable
-                                                                                     pageable);
+  Page<MedicalRecord>
+  findByPatientFirstNameContainsIgnoreCaseOrPatientLastNameContainsIgnoreCaseOrPatientMiddleNameContainsIgnoreCase
+      (String firstName,
+       String lastName,
+       String middleName,
+       Pageable pageable);
+
+  Page<MedicalRecord> findAllBy(TextCriteria criteria, Pageable pageable);
 }
