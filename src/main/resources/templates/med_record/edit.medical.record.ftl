@@ -2,6 +2,9 @@
 <#include "../fragments/page.master.ftl"/>
 
 <#assign layoutOut>
+<script type="application/javascript">
+    $("#medrecords").addClass('active');
+</script>
 
 <form id="MedRecordForm" class="form-horizontal" method="post" action="/medrecord" modelAttribute="MedRecord">
     <@spring.bind "MedRecord"/>

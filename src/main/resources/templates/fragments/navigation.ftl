@@ -15,13 +15,13 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li id="home">
                     <a href="<@spring.url '/'/>">${springMacroRequestContext.getMessage('page.nav.home')}</a>
                 </li>
-                <li>
+                <li id="medrecords">
                     <a href="<@spring.url '/medrecords'/>">${springMacroRequestContext.getMessage('page.nav.medRecords')}</a>
                 </li>
-                <li>
+                <li id="users">
                     <a href="<@spring.url '/users'/>">${springMacroRequestContext.getMessage('page.nav.users')}</a>
                 </li>
             </ul>

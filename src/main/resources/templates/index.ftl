@@ -4,4 +4,7 @@
 <div class="page-header">
     <h2>${springMacroRequestContext.getMessage('page.header.welcome')}</h2>
 </div>
+<script type="application/javascript">
+    $("#home").addClass('active');
+</script>
 </@layout.indexmaster>

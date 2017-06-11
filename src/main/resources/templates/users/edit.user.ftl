@@ -2,6 +2,9 @@
 <#include "../fragments/page.master.ftl"/>
 
 <#assign layoutOut>
+<script type="application/javascript">
+    $("#users").addClass('active');
+</script>
 
 <form id="User" class="form-horizontal" method="post" action="/user" modelAttribute="User">
     <@spring.bind "User"/>
