@@ -3,13 +3,12 @@
 
 <#assign layoutOut>
 
-<form class="form-medrecords" method="post" action="/users">
+<form method="post" action="/users">
     <@spring.bind "Users"/>
     <@spring.bind "SearchCriteria"/>
 
     <div class="page-header">
-        <h2>${springMacroRequestContext.getMessage('page.header.users')}</h2>
-
+        <h2><@spring.message "page.header.users"/></h2>
     </div>
 
     <div class="row">
@@ -42,7 +41,7 @@
 
     <div class="row">
         <div class="pull-right">
-            <a href="/users">
+            <a href="/user">
                 <button type="button"
                         class="btn btn-primary"><@spring.message "page.button.user.register"/></button>
             </a>
@@ -59,6 +58,7 @@
                         <th>#</th>
                         <th><@spring.message "page.field.user.name"/></th>
                         <th><@spring.message "page.field.user.displayName"/></th>
+                        <th><@spring.message "page.field.user.role"/></th>
                         <th><@spring.message "page.actions"/></th>
                     </tr>
                     </thead>
@@ -69,20 +69,21 @@
                                 <td>${user?counter}</td>
                                 <td>${user.username}</td>
                                 <td>${user.displayName}</td>
+                                <td><@spring.message "page.field.role."+user.role/></td>
                                 <td>
                                     <a href="/user/load/${(user.id)}/view">
                                         <button type="button" class="btn btn-xs btn-default">
-                                            <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.view')}
+                                            <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;<@spring.message "page.button.view"/>
                                         </button>
                                     </a>
                                     <a href="/user/load/${(user.id)}/edit">
                                         <button type="button" class="btn btn-xs btn-success">
-                                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.edit')}
+                                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<@spring.message "page.button.edit"/>
                                         </button>
                                     </a>
                                     <button type="button" class="btn btn-xs btn-danger"
                                             onclick="this.disabled=true;post('/user/${user.id}/delete', {'${_csrf.parameterName}':'${_csrf.token}'})">
-                                        <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;${springMacroRequestContext.getMessage('page.button.delete')}
+                                        <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;<@spring.message "page.button.delete"/>
                                     </button>
                                 </td>
                             </tr>

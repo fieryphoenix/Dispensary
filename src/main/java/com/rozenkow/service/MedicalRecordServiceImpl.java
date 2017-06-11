@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,9 +50,9 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
 
   @Override
   public boolean removeRecord(String id) {
-    MedicalRecord recordsToSave = medicalRecordRepository.findOne(id);
-    if (recordsToSave != null) {
-      medicalRecordRepository.delete(recordsToSave);
+    MedicalRecord recordsToDelete = medicalRecordRepository.findOne(id);
+    if (recordsToDelete != null) {
+      medicalRecordRepository.delete(recordsToDelete);
       return true;
     }
     return false;
@@ -63,12 +64,12 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
     if (StringUtils.isBlank(patient)) {
       return medicalRecordRepository.findAll(searchCriteria);
     }
-//    TextCriteria patientCriteria = TextCriteria.forDefaultLanguage().matchingPhrase(patient);
+    TextCriteria patientCriteria = TextCriteria.forDefaultLanguage().matchingPhrase(patient);
     Page<MedicalRecord> searchedRecords = medicalRecordRepository
         .findByPatientFirstNameContainsIgnoreCaseOrPatientLastNameContainsIgnoreCaseOrPatientMiddleNameContainsIgnoreCase
             (patient, patient, patient,
                 searchCriteria);
-//    Page<MedicalRecord> searchedRecords = medicalRecordRepository.findAllBy(patientCriteria, searchCriteria);
+    Page<MedicalRecord> searchedRecords2 = medicalRecordRepository.findAllBy(patientCriteria, searchCriteria);
     return searchedRecords;
   }
 }

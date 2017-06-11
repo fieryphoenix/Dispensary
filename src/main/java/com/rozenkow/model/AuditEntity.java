@@ -1,5 +1,6 @@
 package com.rozenkow.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -38,7 +39,9 @@ public abstract class AuditEntity {
    * @param id the id to set
    */
   public void setId(String id) {
-    this.id = id;
+    if (StringUtils.isNotBlank(id)) {
+      this.id = id;
+    }
   }
 
   /**

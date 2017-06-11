@@ -16,13 +16,13 @@ import java.security.spec.InvalidKeySpecException;
 import static org.springframework.validation.ValidationUtils.rejectIfEmptyOrWhitespace;
 
 @Component
-public class UserFormValidator implements Validator {
-  private final Logger logger = LoggerFactory.getLogger(UserFormValidator.class);
+public class LoginFormValidator implements Validator {
+  private final Logger logger = LoggerFactory.getLogger(LoginFormValidator.class);
 
   private final UserService userService;
 
   @Autowired
-  public UserFormValidator(UserService userService) {
+  public LoginFormValidator(UserService userService) {
     this.userService = userService;
   }
 
@@ -42,7 +42,7 @@ public class UserFormValidator implements Validator {
     try {
       boolean loginSuccess = userService.checkLogin(user);
       if (!loginSuccess) {
-        errors.reject("showMedicalRecords", "Failed.userForm.login");
+        errors.reject("login", "Failed.userForm.login");
       }
     } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
       logger.error("Failed to check user", e);

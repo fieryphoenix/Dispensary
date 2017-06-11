@@ -43,16 +43,21 @@ class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void saveUser(User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
+  public User saveUser(User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
     User existingUser = userRepository.findDistinctFirstByUsernameIgnoreCase(user.getUsername());
-    if (existingUser != null) {
+    if (existingUser != null && StringUtils.isBlank(user.getId())) {
       throw new RuntimeException("user exists");
     }
+    if (existingUser == null || StringUtils.isNoneBlank(user.getPassword())) {
+      Pair<String, String> hashAndSalt = createHashSaltForPassword(user.getPassword().trim(), null);
+      user.setPasswordHash(hashAndSalt.getFirst());
+      user.setPasswordSalt(hashAndSalt.getSecond());
+    } else {
+      user.setPasswordHash(existingUser.getPasswordHash());
+      user.setPasswordSalt(existingUser.getPasswordSalt());
+    }
 
-    Pair<String, String> hashAndSalt = createHashSaltForPassword(user.getPassword(), null);
-    User userToSave = new User(null, user.getUsername(), hashAndSalt.getFirst(), hashAndSalt.getSecond(), user
-        .getDisplayName());
-    userRepository.save(userToSave);
+    return userRepository.save(user);
   }
 
   @Override
@@ -63,6 +68,16 @@ class UserServiceImpl implements UserService {
   @Override
   public User getById(String id) {
     return userRepository.findOne(id);
+  }
+
+  @Override
+  public boolean removeUser(String id) {
+    User userToDelete = userRepository.findOne(id);
+    if (userToDelete != null) {
+      userRepository.delete(userToDelete);
+      return true;
+    }
+    return false;
   }
 
   @Override

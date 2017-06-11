@@ -15,7 +15,7 @@ public class EncryptUtilsTest {
 
   @Test
   public void hashAndSaltAreCreated() throws Exception {
-    Pair<String, String> hashSaltForPassword = EncryptUtils.createHashSaltForPassword("Rozenkow1!", null);
+    Pair<String, String> hashSaltForPassword = EncryptUtils.createHashSaltForPassword("admin", null);
 
     assertThat(hashSaltForPassword.getFirst(), not(isEmptyOrNullString()));
     assertThat(hashSaltForPassword.getSecond(), not(isEmptyOrNullString()));
@@ -23,9 +23,9 @@ public class EncryptUtilsTest {
 
   @Test
   public void hashAndSaltAreSameByInputSalt() throws Exception {
-    Pair<String, String> hashSaltForPassword = EncryptUtils.createHashSaltForPassword("Rozenkow1!", "KzANaoaAs0HZZg==");
+    Pair<String, String> hashSaltForPassword = EncryptUtils.createHashSaltForPassword("Rozenkow1!", "-6384650620671928090");
 
-    assertThat("Incorrect hash", hashSaltForPassword.getFirst(), equalTo("HJqihf31Jkg8fg=="));
-    assertThat("Incorrect Salt", hashSaltForPassword.getSecond(), equalTo("KzANaoaAs0HZZg=="));
+    assertThat("Incorrect hash", hashSaltForPassword.getFirst(), equalTo("cLEcKpY8k+ZTCQ=="));
+    assertThat("Incorrect Salt", hashSaltForPassword.getSecond(), equalTo("-6384650620671928090"));
   }
 }

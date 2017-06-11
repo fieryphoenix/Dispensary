@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 /**
  * Created by Poul Rozenkow.
  */
@@ -23,9 +25,13 @@ public class DictionaryServiceImpl implements DictionaryService {
   }
 
   @Override
-  public <T extends Enum> Map<String, String> buildLocalizedMap(String prefixKey, Class<T> enumClazz) {
+  public <T extends Enum> Map<String, String> buildLocalizedMap(String prefixKey, Class<T> enumClazz, boolean
+      allowEmpty) {
     Map<String, String> enumLocalizedByKeyMap = new HashMap<>();
     Locale currentLocale = LocaleContextHolder.getLocale();
+    if (allowEmpty) {
+      enumLocalizedByKeyMap.put(EMPTY, EMPTY);
+    }
     for (T enumConst : enumClazz.getEnumConstants()) {
       enumLocalizedByKeyMap.put(enumConst.name(), messageSource.getMessage(prefixKey + enumConst.name(), null,
           currentLocale));

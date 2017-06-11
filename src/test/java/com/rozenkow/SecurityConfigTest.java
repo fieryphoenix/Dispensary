@@ -48,7 +48,7 @@ public class SecurityConfigTest {
         .andReturn();
 
     // @formatter:on
-    assertThat(mvcResult.getResponse().getRedirectedUrl()).endsWith("/showMedicalRecords");
+    assertThat(mvcResult.getResponse().getRedirectedUrl()).endsWith("/login");
   }
 
   @Test

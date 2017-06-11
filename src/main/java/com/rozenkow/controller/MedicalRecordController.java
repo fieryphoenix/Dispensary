@@ -89,9 +89,9 @@ public class MedicalRecordController {
   }
 
   private void initRecordForEdit(Model model, MedicalRecord medicalRecord, String readOnly) {
-    final Map<String, String> sexesMap = dictionaryService.buildLocalizedMap("page.field.sex.", Sex.class);
+    final Map<String, String> sexesMap = dictionaryService.buildLocalizedMap("page.field.sex.", Sex.class, false);
     final Map<String, String> ultrasoundTypesMap = dictionaryService.buildLocalizedMap("page.field.ultrasound.type.",
-        UltrasoundType.class);
+        UltrasoundType.class, false);
     model.addAttribute("MedRecord", medicalRecord);
     model.addAttribute("Sexes", sexesMap);
     model.addAttribute("Countries", geoService.getLocalizedCountries());
@@ -105,7 +105,7 @@ public class MedicalRecordController {
     logger.debug("saveMedicalRecord(): medicalRecord = {}", medicalRecord);
 
     if (!result.hasErrors()) {
-      medicalRecordService.saveRecord(medicalRecord);
+      medicalRecord = medicalRecordService.saveRecord(medicalRecord);
 
       redirectAttributes.addFlashAttribute("css", "success");
       redirectAttributes.addFlashAttribute("msgKey", "Success.saved");

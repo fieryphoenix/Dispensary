@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Poul Rozenkow.
  */
-public class Patient {
+public class Person extends AuditEntity {
   @TextIndexed
   private String firstName;
   @TextIndexed
@@ -23,7 +23,7 @@ public class Patient {
   private Address address1;
   private List<String> phones;
 
-  public Patient() {
+  public Person() {
     phones = new ArrayList<>();
     address1 = new Address();
   }
@@ -106,7 +106,7 @@ public class Patient {
 
   @Override
   public String toString() {
-    return "Patient{" +
+    return "Person{" +
            "firstName='" + firstName + '\'' +
            ", lastName='" + lastName + '\'' +
            ", middleName='" + middleName + '\'' +

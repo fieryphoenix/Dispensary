@@ -15,9 +15,11 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
   boolean checkLogin(User user) throws InvalidKeySpecException, NoSuchAlgorithmException;
 
-  void saveUser(User user) throws InvalidKeySpecException, NoSuchAlgorithmException;
+  User saveUser(User user) throws InvalidKeySpecException, NoSuchAlgorithmException;
 
   List<User> searchRecords(SearchCriteria searchCriteria);
 
   User getById(String id);
+
+  boolean removeUser(String id);
 }

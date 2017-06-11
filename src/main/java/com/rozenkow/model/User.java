@@ -1,5 +1,6 @@
 package com.rozenkow.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by Poul Rozenkow.
  */
 @Document(collection = "users")
-public class User extends AuditEntity implements UserDetails {
+public class User extends Worker implements UserDetails {
 
   private String username;
   private String passwordHash;
@@ -102,6 +103,9 @@ public class User extends AuditEntity implements UserDetails {
   }
 
   public String getDisplayName() {
+    if (StringUtils.isBlank(displayName)) {
+      return username;
+    }
     return displayName;
   }
 
@@ -112,10 +116,9 @@ public class User extends AuditEntity implements UserDetails {
   @Override
   public String toString() {
     return "User{" +
-           "id='" + getId() + '\'' +
-           ", username='" + username + '\'' +
+           "username='" + username + '\'' +
            ", displayName='" + displayName + '\'' +
            ", authorities=" + authorities +
-           '}';
+           "} " + super.toString();
   }
 }

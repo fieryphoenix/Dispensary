@@ -3,7 +3,7 @@
 
 <#assign layoutOut>
 
-<form class="form-medrecords" method="post" action="/medrecords">
+<form method="post" action="/medrecords">
     <@spring.bind "MedRecords"/>
     <@spring.bind "SearchCriteria"/>
 
@@ -31,7 +31,7 @@
                             <label for="patient"
                                    class="col-sm-3 control-label"><@spring.message "page.header.patient"/></label>
                             <div class="col-sm-9">
-                                <@spring.formInput "SearchCriteria.fullTextField1" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.patient.fullName')}'" "text"/><@spring.showErrors "<br>"/>
+                                <@spring.formInput "SearchCriteria.fullTextField1" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.fullName')}'" "text"/><@spring.showErrors "<br>"/>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     <tr>
                         <th>#</th>
                         <th>${springMacroRequestContext.getMessage('page.field.medRecord.number')}</th>
-                        <th>${springMacroRequestContext.getMessage('page.field.patient.fullName')}</th>
+                        <th>${springMacroRequestContext.getMessage('page.field.person.fullName')}</th>
                         <th>${springMacroRequestContext.getMessage('page.field.medRecord.created')}</th>
                         <th>${springMacroRequestContext.getMessage('page.actions')}</th>
                     </tr>

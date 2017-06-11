@@ -10,24 +10,26 @@ import java.util.List;
  */
 @Document(collection = "medrecords")
 public class MedicalRecord extends AuditEntity {
-  private Patient patient;
+  private Person patient;
   private String number;
   private List<Disease> diseases;
   private List<Ultrasound> ultrasounds;
   private List<String> medicalExaminations;
+  private List<Visit> visits;
 
   public MedicalRecord() {
-    patient = new Patient();
+    patient = new Person();
     diseases = new ArrayList<>();
     ultrasounds = new ArrayList<>();
     medicalExaminations = new ArrayList<>();
+    visits = new ArrayList<>();
   }
 
-  public Patient getPatient() {
+  public Person getPatient() {
     return patient;
   }
 
-  public void setPatient(Patient patient) {
+  public void setPatient(Person patient) {
     this.patient = patient;
   }
 
@@ -63,6 +65,14 @@ public class MedicalRecord extends AuditEntity {
     this.medicalExaminations = medicalExaminations;
   }
 
+  public List<Visit> getVisits() {
+    return visits;
+  }
+
+  public void setVisits(List<Visit> visits) {
+    this.visits = visits;
+  }
+
   @Override
   public String toString() {
     return "MedicalRecord{" +
@@ -74,6 +84,7 @@ public class MedicalRecord extends AuditEntity {
            ", diseases=" + diseases +
            ", ultrasounds=" + ultrasounds +
            ", medicalExaminations=" + medicalExaminations +
+           ", visits=" + visits +
            '}';
   }
 }
