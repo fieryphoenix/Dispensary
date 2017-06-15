@@ -82,10 +82,12 @@
         <#-- Address -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><@spring.message "page.header.patient.address"/>
+                    <h3 class="panel-title">
+                        <@spring.message "page.header.patient.address"/>
+                        <a class="accordion-toggle" data-toggle="collapse" href="#address"></a>
                     </h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body in" id="address">
                     <address>
                         <div class="form-group">
                             <label for="patient.address1.country"
@@ -169,12 +171,71 @@
     <#-- Medical Record -->
         <div class="col-md-8">
             <@spring.formHiddenInput "MedRecord.id"/>
-        <#-- Deseases -->
+
+            <#-- Visits -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><@spring.message "page.header.patient.diseases"/></h3>
+                    <h3 class="panel-title">
+                        <@spring.message "page.header.patient.visits"/>
+                        <a class="accordion-toggle" data-toggle="collapse" href="#visits"></a>
+                    </h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body collapse" id="visits">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th><@spring.message "page.field.visit.?"/></th>
+                            <th><@spring.message "page.field.visit.?"/></th>
+                            <th><@spring.message "page.field.visit.?"/></th>
+                            <th><@spring.message "page.actions"/></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <#list MedRecord.visits>
+                                <#items as visit>
+                                <tr>
+                                    <td>
+                                        <@spring.formInput "MedRecord.visits[${visit_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.date')}' required" "date"/><@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <@spring.formSingleSelect "MedRecord.visits[${visit_index}].type", Ultrasounds, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.type')}' required">
+                                        </@spring.formSingleSelect>
+                                        <@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <@spring.formTextarea "MedRecord.visits[${visit_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.notes')}'" /><@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <#if !readOnlyForm>
+                                            <a href="#"
+                                               onclick="this.disabled=true;post('/medrecord/cancelVisit/${visit_index}', null, 'post', 'MedRecordForm')">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+                                        </#if>
+                                    </td>
+                                </tr>
+                                </#items>
+                            </#list>
+                        </tbody>
+                    </table>
+                    <#if !readOnlyForm>
+                        <button type="button" class="btn btn-xs"
+                                onclick="this.disabled=true;post('/medrecord/addVisit', null, 'post', 'MedRecordForm')">
+                            <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<@spring.message "page.button.addNew"/>
+                        </button>
+                    </#if>
+                </div>
+            </div> <!-- end of Visit -->
+
+        <#-- Diseases -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <@spring.message "page.header.patient.diseases"/>
+                        <a class="accordion-toggle" data-toggle="collapse" href="#diseases"></a>
+                    </h3>
+                </div>
+                <div class="panel-body collapse" id="diseases">
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr>
@@ -226,9 +287,12 @@
         <#-- Ultrasounds -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><@spring.message "page.header.patient.ultrasounds"/></h3>
+                    <h3 class="panel-title">
+                        <@spring.message "page.header.patient.ultrasounds"/>
+                        <a class="accordion-toggle" data-toggle="collapse" href="#ultrasounds"></a>
+                    </h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body collapse" id="ultrasounds">
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr>
