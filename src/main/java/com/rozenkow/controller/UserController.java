@@ -1,6 +1,6 @@
 package com.rozenkow.controller;
 
-import com.rozenkow.model.Roles;
+import com.rozenkow.model.Role;
 import com.rozenkow.model.Sex;
 import com.rozenkow.model.Speciality;
 import com.rozenkow.model.User;
@@ -163,17 +163,17 @@ public class UserController {
 
   private void initRecordForEdit(Model model, User user, String readOnly) {
     final Map<String, String> sexesMap = dictionaryService.buildLocalizedMap("page.field.sex.", Sex.class, true);
-    final Map<String, String> rolesMap = dictionaryService.buildLocalizedMap("page.field.role.", Roles.class, false);
+    final Map<String, String> rolesMap = dictionaryService.buildLocalizedMap("page.field.role.", Role.class, false);
     if (false) {//fixme
-      rolesMap.remove(Roles.Admin.name());
-      rolesMap.remove(Roles.Operator.name());
+      rolesMap.remove(Role.Admin.name());
+      rolesMap.remove(Role.Operator.name());
     }
     final Map<String, String> specialitiesMap = dictionaryService.buildLocalizedMap("page.field.speciality.",
         Speciality.class, true);
     model.addAttribute("User", user);
     model.addAttribute("Sexes", sexesMap);
     model.addAttribute("Countries", geoService.getLocalizedCountries());
-    model.addAttribute("Roles", rolesMap);
+    model.addAttribute("Role", rolesMap);
     model.addAttribute("Specialities", specialitiesMap);
     model.addAttribute("readOnlyForm", "view".equalsIgnoreCase(readOnly) || "true".equalsIgnoreCase(readOnly));
   }

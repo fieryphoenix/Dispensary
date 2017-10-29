@@ -4,14 +4,14 @@ package com.rozenkow.model;
  * Created by Poul Rozenkow.
  */
 public class Worker extends Person {
-  private Roles role;
+  private Role role;
   private Speciality speciality;
 
-  public Roles getRole() {
+  public Role getRole() {
     return role;
   }
 
-  public void setRole(Roles role) {
+  public void setRole(Role role) {
     this.role = role;
   }
 

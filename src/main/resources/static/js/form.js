@@ -27,7 +27,7 @@ function post(path, params, method, formId) {
 function disableReadOnlyFields() {
     var condition = $('#readOnlyForm').val();
     if (condition !== "" && condition === 'true') {
-        $('input,select').prop("disabled", "true");
+        $('input,select,textarea').prop("disabled", "true");
     }
 }
 

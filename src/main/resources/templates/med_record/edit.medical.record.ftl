@@ -11,6 +11,8 @@
     <@spring.bind "Sexes"/>
     <@spring.bind "Countries"/>
     <@spring.bind "Ultrasounds"/>
+    <@spring.bind "Doctors"/>
+    <@spring.bind "VisitStatuses"/>
 
     <div class="page-header">
         <#if ((MedRecord.id!"")?length > 0) >
@@ -180,13 +182,15 @@
                         <a class="accordion-toggle" data-toggle="collapse" href="#visits"></a>
                     </h3>
                 </div>
-                <div class="panel-body collapse" id="visits">
+                <div class="panel-body" id="visits">
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr>
-                            <th><@spring.message "page.field.visit.?"/></th>
-                            <th><@spring.message "page.field.visit.?"/></th>
-                            <th><@spring.message "page.field.visit.?"/></th>
+                            <th><@spring.message "page.field.visit.from"/></th>
+                            <th><@spring.message "page.field.visit.to"/></th>
+                            <th><@spring.message "page.field.visit.goal"/></th>
+                            <th><@spring.message "page.field.visit.visitTo"/></th>
+                            <th><@spring.message "page.field.visit.status"/></th>
                             <th><@spring.message "page.actions"/></th>
                         </tr>
                         </thead>
@@ -195,15 +199,23 @@
                                 <#items as visit>
                                 <tr>
                                     <td>
-                                        <@spring.formInput "MedRecord.visits[${visit_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.date')}' required" "date"/><@spring.showErrors "<br>"/>
+                                        <@spring.formInput "MedRecord.visits[${visit_index}].from" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.from')}' required" "date"/><@spring.showErrors "<br>"/>
                                     </td>
                                     <td>
-                                        <@spring.formSingleSelect "MedRecord.visits[${visit_index}].type", Ultrasounds, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.type')}' required">
+                                        <@spring.formInput "MedRecord.visits[${visit_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.from')}' required" "date"/><@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <@spring.formInput "MedRecord.visits[${visit_index}].goal" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.goal')}' required" "text"/><@spring.showErrors "<br>"/>
+                                    </td>
+                                    <td>
+                                        <@spring.formSingleSelect "MedRecord.visits[${visit_index}].visitTo", Doctors, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.visit.visitTo')}' required">
                                         </@spring.formSingleSelect>
                                         <@spring.showErrors "<br>"/>
                                     </td>
                                     <td>
-                                        <@spring.formTextarea "MedRecord.visits[${visit_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.notes')}'" /><@spring.showErrors "<br>"/>
+                                        <@spring.formSingleSelect "MedRecord.visits[${visit_index}].status", VisitStatuses, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.visit.status')}' required">
+                                        </@spring.formSingleSelect>
+                                        <@spring.showErrors "<br>"/>
                                     </td>
                                     <td>
                                         <#if !readOnlyForm>

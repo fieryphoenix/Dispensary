@@ -3,6 +3,6 @@ package com.rozenkow.model;
 /**
  * Created by Poul Rozenkow.
  */
-public enum Roles {
+public enum Role {
   Doctor, Operator, Admin
 }

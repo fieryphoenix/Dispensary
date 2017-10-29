@@ -1,7 +1,9 @@
 package com.rozenkow.service;
 
 import com.rozenkow.model.MedicalRecord;
+import com.rozenkow.model.Speciality;
 import com.rozenkow.model.User;
+import com.rozenkow.model.Worker;
 import com.rozenkow.model.ui.SearchCriteria;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -22,4 +24,6 @@ public interface UserService extends UserDetailsService {
   User getById(String id);
 
   boolean removeUser(String id);
+
+  List<Worker> getAllWorkers();
 }

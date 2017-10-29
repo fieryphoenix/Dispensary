@@ -13,7 +13,12 @@ public class Visit extends AuditEntity {
   private Worker visitTo;
   private Date from;
   private Date to;
+  private String goal;
   private VisitStatus status;
+
+  public Visit() {
+    status = VisitStatus.Planned;
+  }
 
   public String getVisitToID() {
     return visitToID;
@@ -55,6 +60,14 @@ public class Visit extends AuditEntity {
     this.status = status;
   }
 
+  public String getGoal() {
+    return goal;
+  }
+
+  public void setGoal(String goal) {
+    this.goal = goal;
+  }
+
   @Override
   public String toString() {
     return "Visit{" +
@@ -62,6 +75,7 @@ public class Visit extends AuditEntity {
            ", visitTo=" + visitTo +
            ", from=" + from +
            ", to=" + to +
+           ", goal='" + goal + '\'' +
            ", status=" + status +
            "} " + super.toString();
   }

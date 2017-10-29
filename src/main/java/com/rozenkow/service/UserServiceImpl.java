@@ -1,7 +1,9 @@
 package com.rozenkow.service;
 
 import com.rozenkow.db.UserRepository;
+import com.rozenkow.model.Role;
 import com.rozenkow.model.User;
+import com.rozenkow.model.Worker;
 import com.rozenkow.model.ui.SearchCriteria;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.rozenkow.util.EncryptUtils.createHashSaltForPassword;
 
@@ -78,6 +81,15 @@ class UserServiceImpl implements UserService {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public List<Worker> getAllWorkers() {
+    List<User> doctors = userRepository.findDistinctByRole(Role.Doctor);
+    List<User> operators = userRepository.findDistinctByRole(Role.Operator);
+    List<Worker> workers = doctors.stream().map(u -> (Worker) u).collect(Collectors.toList());
+    workers.addAll(operators.stream().map(u -> (Worker) u).collect(Collectors.toList()));
+    return workers;
   }
 
   @Override
