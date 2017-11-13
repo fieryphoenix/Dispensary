@@ -1,7 +1,5 @@
 package com.rozenkow.service;
 
-import com.rozenkow.model.MedicalRecord;
-import com.rozenkow.model.Speciality;
 import com.rozenkow.model.User;
 import com.rozenkow.model.Worker;
 import com.rozenkow.model.ui.SearchCriteria;

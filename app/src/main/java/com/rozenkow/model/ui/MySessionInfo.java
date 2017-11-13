@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("session")
 public class MySessionInfo {
-  private UserDetails user;
   private final UserService userService;
+  private UserDetails user;
 
   @Autowired
   public MySessionInfo(UserService userService) {

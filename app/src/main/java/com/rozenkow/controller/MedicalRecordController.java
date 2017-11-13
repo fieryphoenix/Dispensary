@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,9 +66,18 @@ public class MedicalRecordController {
 
   @InitBinder
   public void bindingPreparation(WebDataBinder binder) {
+    Locale locale = LocaleContextHolder.getLocale();
+
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
     binder.registerCustomEditor(Date.class, dateEditor);
+
+//    DateFormat dateTimeFormat = DateTimeFormatterFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.FULL, locale);
+//    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL);
+//
+//    DateFormatter
+//
+//    binder.addCustomFormatter(dateTimeFormatter);//fixme
   }
 
   @RequestMapping(path = "/medrecords", method = RequestMethod.GET)
@@ -130,6 +141,9 @@ public class MedicalRecordController {
       redirectAttributes.addFlashAttribute("msgKey", "Success.saved");
       return "redirect:/medrecord/load/" + medicalRecord.getId() + "/edit";
     } else {
+      logger.warn("errors: {}", result.getAllErrors());
+
+      initRecordForEdit(model, medicalRecord, null);
       return EDIT_MEDICAL_RECORD;
     }
   }
