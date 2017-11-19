@@ -4,15 +4,15 @@
 
 - Tomcat - embedded
 - Java 8
-- - Download http://www.oracle.com/technetwork/java/javase/downloads/index.html
-- - Set JAVA_HOME to extracted folder
+    - Download http://www.oracle.com/technetwork/java/javase/downloads/index.html
+    - Set JAVA_HOME to extracted folder
 - Any IDE for Java and WEB
-- - Intellij IDEA (Community edition - https://www.jetbrains.com/idea/download/#section=windows)
+    - Intellij IDEA (Community edition - https://www.jetbrains.com/idea/download/#section=windows)
 - Maven 3.5+ 
-- - Download and extract http://maven.apache.org/download.cgi
-- - Set MAVEN_HOME to extracted directory
+    - Download and extract http://maven.apache.org/download.cgi
+    - Set MAVEN_HOME to extracted directory
 - MongoDB
-- - Instruction https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+    - Instruction https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 - Install GIT
 
 
