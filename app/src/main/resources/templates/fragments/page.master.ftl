@@ -3,6 +3,18 @@
 <#macro page_head>
 </#macro>
 
+<#macro authorize ifAnyGranted>
+    <#assign authorized = false>
+    <#list (authentication.authorities)!['ROLE_ANONYMOUS'] as authority>
+        <#if authority == ifAnyGranted>
+            <#assign authorized = true>
+        </#if>
+    </#list>
+    <#if authorized>
+        <#nested>
+    </#if>
+</#macro>
+
 <#macro indexmaster nestedOut="" titleKey="defaultTitle">
 <!DOCTYPE html>
 <html lang="ru">

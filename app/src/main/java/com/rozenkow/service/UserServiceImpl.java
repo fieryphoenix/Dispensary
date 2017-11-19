@@ -8,12 +8,15 @@ import com.rozenkow.model.ui.SearchCriteria;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +46,13 @@ class UserServiceImpl implements UserService {
       user.setPasswordHash(existingUser.getPasswordHash());
       user.setPasswordSalt(existingUser.getPasswordSalt());
     }
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    if (user.getRole() != null) {
+      for (String role : user.getRole().getGrantedRoles()) {
+        authorities.add(new SimpleGrantedAuthority(role));
+      }
+    }
+    user.setAuthorities(authorities);
 
     return userRepository.save(user);
   }

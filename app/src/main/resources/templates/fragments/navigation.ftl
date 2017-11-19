@@ -1,5 +1,16 @@
 <#import "/spring.ftl" as spring/>
-<#--<#assign security=JspTaglibs["/tld/security.tld"] />-->
+
+<#macro authorize ifAnyGranted>
+    <#assign authorized = false>
+    <#list (authentication.authorities)!['ROLE_ANONYMOUS'] as authority>
+        <#if authority == ifAnyGranted>
+            <#assign authorized = true>
+        </#if>
+    </#list>
+    <#if authorized>
+        <#nested>
+    </#if>
+</#macro>
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -19,12 +30,16 @@
                 <li id="home">
                     <a href="<@spring.url '/'/>">${springMacroRequestContext.getMessage('page.nav.home')}</a>
                 </li>
+            <@authorize ifAnyGranted="ROLE_USER">
                 <li id="medrecords">
                     <a href="<@spring.url '/medrecord/all'/>">${springMacroRequestContext.getMessage('page.nav.medRecords')}</a>
                 </li>
+            </@authorize>
+            <@authorize ifAnyGranted="ROLE_OPERATOR">
                 <li id="users">
                     <a href="<@spring.url '/users'/>">${springMacroRequestContext.getMessage('page.nav.users')}</a>
                 </li>
+            </@authorize>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -37,18 +52,23 @@
                         <li><a href="<@spring.url '/?language=en'/>">English</a></li>
                     </ul>
                 </li>
-            <#--<@security.authorize ifAnyGranted="USER">-->
-            <#--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"-->
-            <#--aria-expanded="false">loged in user<span-->
-            <#--class="caret"></span></a>-->
-            <#--<ul class="dropdown-menu">-->
-            <#--<li><a href="<@spring.url '/logout'/>">Logout</a></li>-->
-            <#--</ul>-->
-            <#--</@security.authorize>-->
-            <#--<@security.authorize  ifNotGranted="USER">-->
+            <@authorize ifAnyGranted="ROLE_USER">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">${authentication.principal.displayName}<span
+                            class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="<@spring.url '/logout'/>">${springMacroRequestContext.getMessage('page.nav.logout')}</a>
+                        </li>
+                    </ul>
+                </li>
+            </@authorize>
+            <@authorize ifAnyGranted="ROLE_ANONYMOUS">
                 <li><a href="<@spring.url '/login'/>">${springMacroRequestContext.getMessage('page.nav.login')}&nbsp;&nbsp;<span
                         class="glyphicon glyphicon-log-in"></span></a></li>
-            <#--</@security.authorize>-->
+            </@authorize>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

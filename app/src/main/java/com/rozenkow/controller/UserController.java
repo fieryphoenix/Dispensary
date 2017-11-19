@@ -13,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,10 +32,15 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 @Controller
 @SessionAttributes("UserForm")
@@ -78,10 +86,12 @@ public class UserController {
   @RequestMapping(path = "/logout", method = RequestMethod.GET)
   public String doLogout(Model model) {
     model.asMap().clear();
+    SecurityContextHolder.getContext().setAuthentication(null);
     return "/";
   }
 
   @RequestMapping(path = "/users", method = RequestMethod.GET)
+  @PreAuthorize("hasRole('ROLE_OPERATOR')")
   public String showUsers(Model model) {
     SearchCriteria searchCriteria = new SearchCriteria("username");
     List<User> records = userService.searchRecords(searchCriteria);
@@ -91,6 +101,7 @@ public class UserController {
   }
 
   @RequestMapping(path = "/users", method = RequestMethod.POST)
+  @PreAuthorize("hasRole('ROLE_OPERATOR')")
   public String searchUsers(@ModelAttribute("SearchCriteria") SearchCriteria searchCriteria, Model model) {
     List<User> users = userService.searchRecords(searchCriteria);
     model.addAttribute("Users", users);
@@ -99,6 +110,7 @@ public class UserController {
   }
 
   @RequestMapping(path = {"/user/load/{id}/{viewMode}", "/user"}, method = RequestMethod.GET)
+  @PreAuthorize("hasRole('OPERATOR')")
   public String loadOrCreateUser(@PathVariable(name = "id", required = false) Optional<String> id,
                                  @PathVariable(name = "viewMode", required = false) String
                                      viewMode, Model model) {
@@ -110,6 +122,7 @@ public class UserController {
   }
 
   @RequestMapping(path = {"/user"}, method = RequestMethod.POST)
+  @PreAuthorize("hasRole('OPERATOR')")
   public String saveUser(@ModelAttribute("User") User user, BindingResult result,
                          RedirectAttributes redirectAttributes, Model model) {
     logger.debug("saveUser(): medicalRecord = {}", user);
@@ -131,6 +144,7 @@ public class UserController {
   }
 
   @RequestMapping(path = {"/user/{id}/delete"}, method = RequestMethod.POST)
+  @PreAuthorize("hasRole('ADMIN')")
   public String deleteUser(@PathVariable("id") String id, Model model) {
     logger.debug("deleteUser(): id = {}", id);
     boolean removed = userService.removeUser(id);
@@ -145,10 +159,15 @@ public class UserController {
   private void initRecordForEdit(Model model, User user, String readOnly) {
     final Map<String, String> sexesMap = dictionaryService.buildLocalizedMap("page.field.sex.", Sex.class, true);
     final Map<String, String> rolesMap = dictionaryService.buildLocalizedMap("page.field.role.", Role.class, false);
-    if (false) {//fixme
-      rolesMap.remove(Role.Admin.name());
-      rolesMap.remove(Role.Operator.name());
+    Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
+        .getAuthorities();
+    Set<String> authRoles = authorities.stream().map(GrantedAuthority::getAuthority).collect(toSet());
+    for (Role role : Role.values()) {
+      if (!authRoles.containsAll(Arrays.asList(role.getGrantedRoles()))) {
+        rolesMap.remove(role.name());
+      }
     }
+
     final Map<String, String> specialitiesMap = dictionaryService.buildLocalizedMap("page.field.speciality.",
         Speciality.class, true);
     model.addAttribute("User", user);

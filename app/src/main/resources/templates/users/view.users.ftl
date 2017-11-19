@@ -84,10 +84,12 @@
                                             <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;<@spring.message "page.button.edit"/>
                                         </button>
                                     </a>
+                                <@authorize ifAnyGranted="ROLE_ADMIN">
                                     <button type="button" class="btn btn-xs btn-danger"
                                             onclick="this.disabled=true;post('/user/${user.id}/delete', {'${_csrf.parameterName}':'${_csrf.token}'})">
                                         <span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;<@spring.message "page.button.delete"/>
                                     </button>
+                                </@authorize>
                                 </td>
                             </tr>
                             </#items>

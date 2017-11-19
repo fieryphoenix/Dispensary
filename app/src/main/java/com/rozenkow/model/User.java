@@ -5,7 +5,6 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -22,7 +21,7 @@ public class User extends Worker implements UserDetails {
   private String passwordSalt;
   @Transient
   private String password;
-  private List<SimpleGrantedAuthority> authorities;
+  private List<? extends GrantedAuthority> authorities;
 
   public User() {
   }
@@ -88,6 +87,10 @@ public class User extends Worker implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return authorities;
+  }
+
+  public void setAuthorities(List<? extends GrantedAuthority> authorities) {
+    this.authorities = authorities;
   }
 
   @Override
