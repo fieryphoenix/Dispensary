@@ -22,25 +22,22 @@ public class User extends Worker implements UserDetails {
   private String passwordSalt;
   @Transient
   private String password;
-  private String displayName;
   private List<SimpleGrantedAuthority> authorities;
 
   public User() {
   }
 
   @PersistenceConstructor
-  public User(String id, String username, String passwordHash, String passwordSalt, String displayName) {
+  public User(String id, String username, String passwordHash, String passwordSalt) {
     setId(id);
     this.username = username;
     this.passwordHash = passwordHash;
     this.passwordSalt = passwordSalt;
-    this.displayName = displayName;
   }
 
-  public User(String username, String password, String displayName) {
+  public User(String username, String password) {
     this.username = username;
     this.password = password;
-    this.displayName = displayName;
   }
 
   @Override
@@ -103,21 +100,17 @@ public class User extends Worker implements UserDetails {
   }
 
   public String getDisplayName() {
-    if (StringUtils.isBlank(displayName)) {
+    if (StringUtils.isBlank(getFirstName()) || StringUtils.isBlank(getLastName())) {
       return username;
     }
-    return displayName;
-  }
-
-  public void setDisplayName(String displayName) {
-    this.displayName = displayName;
+    return getFirstName() + " " + getLastName();
   }
 
   @Override
   public String toString() {
     return "User{" +
            "username='" + username + '\'' +
-           ", displayName='" + displayName + '\'' +
+           ", displayName='" + getDisplayName() + '\'' +
            ", authorities=" + authorities +
            "} " + super.toString();
   }

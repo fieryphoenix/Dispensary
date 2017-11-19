@@ -173,7 +173,7 @@ public class UserController {
     model.addAttribute("User", user);
     model.addAttribute("Sexes", sexesMap);
     model.addAttribute("Countries", geoService.getLocalizedCountries());
-    model.addAttribute("Role", rolesMap);
+    model.addAttribute("Roles", rolesMap);
     model.addAttribute("Specialities", specialitiesMap);
     model.addAttribute("readOnlyForm", "view".equalsIgnoreCase(readOnly) || "true".equalsIgnoreCase(readOnly));
   }

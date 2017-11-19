@@ -5,7 +5,6 @@
     "username": "admin",
     "passwordHash": "YrTSnEM=",
     "passwordSalt": "290937517430682174",
-    "displayName": "System Admin",
     "role": "Admin",
     "authorities": [
       "USER",

@@ -14,6 +14,7 @@ import com.rozenkow.service.DictionaryService;
 import com.rozenkow.service.GeoService;
 import com.rozenkow.service.MedicalRecordService;
 import com.rozenkow.service.WorkerService;
+import com.rozenkow.util.LocalDateTimeEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -72,12 +74,8 @@ public class MedicalRecordController {
     CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
     binder.registerCustomEditor(Date.class, dateEditor);
 
-//    DateFormat dateTimeFormat = DateTimeFormatterFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.FULL, locale);
-//    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL);
-//
-//    DateFormatter
-//
-//    binder.addCustomFormatter(dateTimeFormatter);//fixme
+    LocalDateTimeEditor dateTimeEditor = new LocalDateTimeEditor(locale);
+    binder.registerCustomEditor(LocalDateTime.class, dateTimeEditor);
   }
 
   @RequestMapping(path = "/medrecords", method = RequestMethod.GET)

@@ -2,7 +2,7 @@ package com.rozenkow.model;
 
 import org.springframework.data.annotation.Transient;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Poul Rozenkow.
@@ -11,8 +11,8 @@ public class Visit extends AuditEntity {
   private String visitToID;
   @Transient
   private Worker visitTo;
-  private Date from;
-  private Date to;
+  private LocalDateTime from;
+  private LocalDateTime to;
   private String goal;
   private VisitStatus status;
 
@@ -36,19 +36,19 @@ public class Visit extends AuditEntity {
     this.visitTo = visitTo;
   }
 
-  public Date getFrom() {
+  public LocalDateTime getFrom() {
     return from;
   }
 
-  public void setFrom(Date from) {
+  public void setFrom(LocalDateTime from) {
     this.from = from;
   }
 
-  public Date getTo() {
+  public LocalDateTime getTo() {
     return to;
   }
 
-  public void setTo(Date to) {
+  public void setTo(LocalDateTime to) {
     this.to = to;
   }
 
