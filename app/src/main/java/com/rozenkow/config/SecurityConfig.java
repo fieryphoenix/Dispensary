@@ -1,13 +1,20 @@
 package com.rozenkow.config;
 
+import com.rozenkow.service.CustomPasswordEncoder;
+import com.rozenkow.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 /**
  * Created by Poul Rozenkow.
@@ -18,13 +25,23 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 @EnableGlobalAuthentication
 @Profile("!https")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+  private final UserService userService;
+
+  @Autowired
+  public SecurityConfig(UserService userService) {
+    this.userService = userService;
+  }
 
   @Override
   protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
     // @formatter:off
     auth
-        .inMemoryAuthentication()
-        .withUser("user1").password("user1Pass").roles("USER");
+        .userDetailsService(userService)
+        .and()
+        .authenticationProvider(authProvider())
+        .eraseCredentials(true);
+//        .inMemoryAuthentication()
+//        .withUser("user").password("password").roles("USER");
     // @formatter:on
   }
 
@@ -33,12 +50,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
         .authorizeRequests()
-//          .antMatchers("/showMedicalRecords*", "/", "/index", "/css/**", "/js/**", "/tld/**").permitAll() fixme - temporal for dev
-          .anyRequest().permitAll()
+          .antMatchers( "/", "/index", "/css/**", "/js/**", "/tld/**", "/bower_components/**").permitAll()
+          .antMatchers( "/login/**").permitAll()
+          .anyRequest().authenticated()
         .and()
         .formLogin()
           .loginPage("/login")
-        .successHandler(new SavedRequestAwareAuthenticationSuccessHandler()).defaultSuccessUrl("/index");
+          .loginProcessingUrl("/login-processing")
+          .defaultSuccessUrl("/index", true)
+          .failureUrl("/login?error=true")
+        .and()
+        .logout()
+          .logoutUrl("/logout")
+          .clearAuthentication(true)
+          .deleteCookies("JSESSIONID")
+          .permitAll()
+        .and();
     // @formatter:on
+  }
+
+  @Bean
+  public AbstractUserDetailsAuthenticationProvider authProvider() {
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(userDetailsService());
+    authProvider.setPasswordEncoder(passwordEncoder());
+    authProvider.setSaltSource(saltSource());
+    return authProvider;
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new CustomPasswordEncoder();
+  }
+
+  @Bean
+  public SaltSource saltSource() {
+    return userService;
   }
 }

@@ -19,6 +19,12 @@
         </div>
     </#if>
 
+    <#if Session.SPRING_SECURITY_LAST_EXCEPTION?? && Session.SPRING_SECURITY_LAST_EXCEPTION.message?has_content>
+    <div class="alert alert-danger" role="alert">
+        ${springMacroRequestContext.getMessage('login.bad.credentials')}
+    </div>
+    </#if>
+
     <div class="page-header">
         <h2 class="form-signin-heading">${springMacroRequestContext.getMessage('page.header.signin')}</h2>
     </div>

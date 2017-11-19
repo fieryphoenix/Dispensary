@@ -67,7 +67,7 @@ public class User extends Worker implements UserDetails {
 
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
@@ -92,7 +92,7 @@ public class User extends Worker implements UserDetails {
 
   @Override
   public String getPassword() {
-    return password;
+    return password == null ? getPasswordHash() : password;
   }
 
   public void setPassword(String password) {

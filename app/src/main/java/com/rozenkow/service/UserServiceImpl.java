@@ -30,22 +30,6 @@ class UserServiceImpl implements UserService {
   }
 
   @Override
-  public boolean checkLogin(User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
-    if (user == null) {
-      return false;
-    }
-    User existingUser = userRepository.findDistinctFirstByUsernameIgnoreCase(user.getUsername());
-    if (existingUser == null) {
-      return false;
-    }
-
-    Pair<String, String> saltAndHash = createHashSaltForPassword(user.getPassword(), existingUser.getPasswordSalt());
-
-    return StringUtils.equals(saltAndHash.getFirst(), existingUser.getPasswordHash()) && StringUtils.equals
-        (saltAndHash.getSecond(), existingUser.getPasswordSalt());
-  }
-
-  @Override
   public User saveUser(User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
     User existingUser = userRepository.findDistinctFirstByUsernameIgnoreCase(user.getUsername());
     if (existingUser != null && StringUtils.isBlank(user.getId())) {
@@ -99,5 +83,10 @@ class UserServiceImpl implements UserService {
       throw new UsernameNotFoundException("Not found");
     }
     return user;
+  }
+
+  @Override
+  public Object getSalt(UserDetails user) {
+    return ((User) user).getPasswordSalt();
   }
 }

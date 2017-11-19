@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-
 import static org.springframework.validation.ValidationUtils.rejectIfEmptyOrWhitespace;
 
 @Component
@@ -39,14 +36,6 @@ public class LoginFormValidator implements Validator {
     rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty.userForm.username");
     rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.userForm.password");
 
-    try {
-      boolean loginSuccess = userService.checkLogin(user);
-      if (!loginSuccess) {
-        errors.reject("login", "Failed.userForm.login");
-      }
-    } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-      logger.error("Failed to check user", e);
-    }
   }
 
 }

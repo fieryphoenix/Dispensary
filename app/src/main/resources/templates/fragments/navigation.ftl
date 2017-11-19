@@ -1,5 +1,6 @@
 <#import "/spring.ftl" as spring/>
-<#--<#assign security=JspTaglibs["/tld/security.tld"] /> fixme - security does not work!!!-->
+<#--<#assign security=JspTaglibs["/tld/security.tld"] />-->
+
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -19,7 +20,7 @@
                     <a href="<@spring.url '/'/>">${springMacroRequestContext.getMessage('page.nav.home')}</a>
                 </li>
                 <li id="medrecords">
-                    <a href="<@spring.url '/medrecords'/>">${springMacroRequestContext.getMessage('page.nav.medRecords')}</a>
+                    <a href="<@spring.url '/medrecord/all'/>">${springMacroRequestContext.getMessage('page.nav.medRecords')}</a>
                 </li>
                 <li id="users">
                     <a href="<@spring.url '/users'/>">${springMacroRequestContext.getMessage('page.nav.users')}</a>
@@ -44,7 +45,7 @@
             <#--<li><a href="<@spring.url '/logout'/>">Logout</a></li>-->
             <#--</ul>-->
             <#--</@security.authorize>-->
-            <#--<@security.authorize ifNotGranted="USER">-->
+            <#--<@security.authorize  ifNotGranted="USER">-->
                 <li><a href="<@spring.url '/login'/>">${springMacroRequestContext.getMessage('page.nav.login')}&nbsp;&nbsp;<span
                         class="glyphicon glyphicon-log-in"></span></a></li>
             <#--</@security.authorize>-->

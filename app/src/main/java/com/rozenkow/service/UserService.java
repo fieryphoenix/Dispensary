@@ -3,6 +3,7 @@ package com.rozenkow.service;
 import com.rozenkow.model.User;
 import com.rozenkow.model.Worker;
 import com.rozenkow.model.ui.SearchCriteria;
+import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.security.NoSuchAlgorithmException;
@@ -12,8 +13,7 @@ import java.util.List;
 /**
  * Created by Poul Rozenkow.
  */
-public interface UserService extends UserDetailsService {
-  boolean checkLogin(User user) throws InvalidKeySpecException, NoSuchAlgorithmException;
+public interface UserService extends UserDetailsService, SaltSource {
 
   User saveUser(User user) throws InvalidKeySpecException, NoSuchAlgorithmException;
 

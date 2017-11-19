@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
  * Created by Poul Rozenkow.
  */
 @Controller
+@RequestMapping("/medrecord")
 public class MedicalRecordController {
   private static final String MEDICAL_RECORDS = "med_record/view.medical.records";
   private static final String EDIT_MEDICAL_RECORD = "med_record/edit.medical.record";
@@ -78,7 +79,7 @@ public class MedicalRecordController {
     binder.registerCustomEditor(LocalDateTime.class, dateTimeEditor);
   }
 
-  @RequestMapping(path = "/medrecords", method = RequestMethod.GET)
+  @RequestMapping(path = "/all", method = RequestMethod.GET)
   public String showMedicalRecords(Model model) {
     List<MedicalRecord> records = medicalRecordService.getRecords();
     model.addAttribute("MedRecords", records);
@@ -86,7 +87,7 @@ public class MedicalRecordController {
     return MEDICAL_RECORDS;
   }
 
-  @RequestMapping(path = "/medrecords", method = RequestMethod.POST)
+  @RequestMapping(path = "/all", method = RequestMethod.POST)
   public String searchMedicalRecords(@ModelAttribute("SearchCriteria") SearchCriteria searchCriteria, Model model) {
     Page<MedicalRecord> medicalRecords = medicalRecordService.searchRecords(searchCriteria);
     model.addAttribute("MedRecords", medicalRecords.getContent());
@@ -94,7 +95,7 @@ public class MedicalRecordController {
     return MEDICAL_RECORDS;
   }
 
-  @RequestMapping(path = {"/medrecord/load/{id}/{viewMode}", "/medrecord"}, method = RequestMethod.GET)
+  @RequestMapping(path = {"/load/{id}/{viewMode}", "/medrecord"}, method = RequestMethod.GET)
   public String loadOrCreateMedicalRecord(@PathVariable(name = "id", required = false) Optional<String> id,
                                           @PathVariable(name = "viewMode", required = false) String
                                               viewMode, Model model) {
@@ -127,7 +128,7 @@ public class MedicalRecordController {
     model.addAttribute("readOnlyForm", "view".equalsIgnoreCase(readOnly) || "true".equalsIgnoreCase(readOnly));
   }
 
-  @RequestMapping(path = {"/medrecord"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/"}, method = RequestMethod.POST)
   public String saveMedicalRecord(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, BindingResult result,
                                   RedirectAttributes redirectAttributes, Model model) {
     logger.debug("saveMedicalRecord(): medicalRecord = {}", medicalRecord);
@@ -146,7 +147,7 @@ public class MedicalRecordController {
     }
   }
 
-  @RequestMapping(path = {"/medrecord/{id}/delete"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/{id}/delete"}, method = RequestMethod.POST)
   public String deleteMedicalRecord(@PathVariable("id") String id, Model model) {
     logger.debug("deleteMedicalRecord(): id = {}", id);
     boolean removed = medicalRecordService.removeRecord(id);
@@ -158,7 +159,7 @@ public class MedicalRecordController {
     return showMedicalRecords(model);
   }
 
-  @RequestMapping(path = {"/medrecord/addPhone"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/addPhone"}, method = RequestMethod.POST)
   public String addPatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute
       ("readOnlyForm") String readOnly, Model model) {
     logger.debug("addPatientPhone(): MedRecord = {}", medicalRecord);
@@ -169,7 +170,7 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/medrecord/deletePhone/{index}"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/deletePhone/{index}"}, method = RequestMethod.POST)
   public String deletePatientPhone(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute
       ("readOnlyForm") String readOnly, @PathVariable("index") int
                                        phoneIndex, Model model) {
@@ -183,7 +184,7 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/medrecord/addDisease"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/addDisease"}, method = RequestMethod.POST)
   public String addDisease(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute("readOnlyForm")
       String readOnly, Model model) {
     logger.debug("addDisease(): MedRecord = {}", medicalRecord);
@@ -194,7 +195,7 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/medrecord/deleteDisease/{index}"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/deleteDisease/{index}"}, method = RequestMethod.POST)
   public String deleteDisease(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
       index, @ModelAttribute("readOnlyForm") String readOnly, Model model) {
     logger.debug("deleteDisease(): index={}, MedRecord = {}", index, medicalRecord);
@@ -207,7 +208,7 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/medrecord/addUltrasound"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/addUltrasound"}, method = RequestMethod.POST)
   public String addUltrasound(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute
       ("readOnlyForm") String readOnly, Model model) {
     logger.debug("addUltrasound(): MedRecord = {}", medicalRecord);
@@ -218,7 +219,7 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/medrecord/deleteUltrasound/{index}"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/deleteUltrasound/{index}"}, method = RequestMethod.POST)
   public String deleteUltrasound(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
       index, @ModelAttribute("readOnlyForm") String readOnly, Model model) {
     logger.debug("deleteUltrasound(): index={}, MedRecord = {}", index, medicalRecord);
@@ -231,7 +232,7 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/medrecord/addVisit"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/addVisit"}, method = RequestMethod.POST)
   public String addVisit(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute
       ("readOnlyForm") String readOnly, Model model) {
     logger.debug("addVisit(): MedRecord = {}", medicalRecord);
@@ -242,7 +243,7 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/medrecord/deleteVisit/{index}"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/deleteVisit/{index}"}, method = RequestMethod.POST)
   public String deleteVisit(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
       index, @ModelAttribute("readOnlyForm") String readOnly, Model model) {
     logger.debug("deleteVisit(): index={}, MedRecord = {}", index, medicalRecord);

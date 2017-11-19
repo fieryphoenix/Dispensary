@@ -16,7 +16,6 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,29 +68,11 @@ public class UserController {
 
   @RequestMapping(path = "/login", method = RequestMethod.GET)
   public String login(Model model) {
-    model.addAttribute("UserForm", new User());
+    if (!model.containsAttribute("UserForm")) {
+      model.addAttribute("UserForm", new User());
+    }
     model.addAttribute("Remember", false);
     return LOGIN_PAGE;
-  }
-
-  @RequestMapping(path = "/login-processing", method = RequestMethod.POST)
-  public String doLogin(@ModelAttribute("UserForm") @Validated User user, BindingResult result,
-                        RedirectAttributes redirectAttributes) {
-
-    logger.debug("doLogin() : {}", user);
-
-    if (result.hasErrors()) {
-      return LOGIN_PAGE;
-    } else {
-
-      redirectAttributes.addFlashAttribute("css", "success");
-      redirectAttributes.addFlashAttribute("msgKey", "Success.userForm.login");
-
-//            userService.saveOrUpdate(user);
-
-      // POST/REDIRECT/GET
-      return "redirect:/index";
-    }
   }
 
   @RequestMapping(path = "/logout", method = RequestMethod.GET)
