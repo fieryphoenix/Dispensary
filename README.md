@@ -17,7 +17,7 @@
 
 
 ## Running
-To prepare project and download all external resource
+To prepare project and download all external resource run in root folder
 ````sh
 > mvn clean package -DskipTests
 ````
@@ -30,13 +30,14 @@ To run mongo
 
 > **Before first run:** Initialize DB
 
-To start application
+To start application run in /app folder
 ````sh
 > mvn spring-boot:run
 ````
 Open in browser [http://localhost:8080](http://localhost:8080)
 
 ## Initialization of DB
+To fill in Database with initial data run the application with the following profile in /app folder
 ````sh
 > mvn spring-boot:run -P InitDB 
 ````
