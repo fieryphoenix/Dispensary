@@ -16,15 +16,10 @@
 - Install GIT
 
 
-## Initialization
-````sh
-> mvn spring-boot:run -P InitDB 
-````
-
 ## Running
 To prepare project and download all external resource
 ````sh
-> mvn clean package 
+> mvn clean package -DskipTests
 ````
 > **Note:** Node.js and Bower will be installed locally
 
@@ -33,8 +28,15 @@ To run mongo
 > mongod.exe -f {path}\mongod.conf.yml
 ````
 
+> **Before first run:** Initialize DB
+
 To start application
 ````sh
 > mvn spring-boot:run
 ````
 Open in browser [http://localhost:8080](http://localhost:8080)
+
+## Initialization of DB
+````sh
+> mvn spring-boot:run -P InitDB 
+````
