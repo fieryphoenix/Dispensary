@@ -106,6 +106,12 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
+  @RequestMapping(path = {"/new", "/medrecord"}, method = RequestMethod.GET)
+  public String createMedicalRecord(Model model) {
+    logger.debug("createMedicalRecord()");
+    return loadOrCreateMedicalRecord(Optional.empty(), "edit", model);
+  }
+
   private void initRecordForEdit(Model model, MedicalRecord medicalRecord, String readOnly) {
     final Map<String, String> sexesMap = dictionaryService.buildLocalizedMap("page.field.sex.", Sex.class, false);
     final Map<String, String> ultrasoundTypesMap = dictionaryService.buildLocalizedMap("page.field.ultrasound.type.",
@@ -128,7 +134,7 @@ public class MedicalRecordController {
     model.addAttribute("readOnlyForm", "view".equalsIgnoreCase(readOnly) || "true".equalsIgnoreCase(readOnly));
   }
 
-  @RequestMapping(path = {"/"}, method = RequestMethod.POST)
+  @RequestMapping(path = {"/save"}, method = RequestMethod.POST)
   public String saveMedicalRecord(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, BindingResult result,
                                   RedirectAttributes redirectAttributes, Model model) {
     logger.debug("saveMedicalRecord(): medicalRecord = {}", medicalRecord);

@@ -92,8 +92,7 @@ public class UserController {
 
   @RequestMapping(path = "/users", method = RequestMethod.GET)
   @PreAuthorize("hasRole('ROLE_OPERATOR')")
-  public String showUsers(Model model) {
-    SearchCriteria searchCriteria = new SearchCriteria("username");
+  public String showUsers(@ModelAttribute("SearchCriteria") SearchCriteria searchCriteria, Model model) {
     List<User> records = userService.searchRecords(searchCriteria);
     model.addAttribute("Users", records);
     model.addAttribute("SearchCriteria", searchCriteria);
@@ -153,7 +152,7 @@ public class UserController {
       model.addAttribute("msgKey", "Success.removed");
     }
 
-    return showUsers(model);
+    return showUsers(new SearchCriteria(), model);
   }
 
   private void initRecordForEdit(Model model, User user, String readOnly) {

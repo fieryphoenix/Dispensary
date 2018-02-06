@@ -36,7 +36,7 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
 
   @Override
   public MedicalRecord saveRecord(MedicalRecord medicalRecord) {
-    MedicalRecord recordsToSave = medicalRecordRepository.findOne(medicalRecord.getId());
+    MedicalRecord recordsToSave = medicalRecordRepository.findOne(StringUtils.defaultIfBlank(medicalRecord.getId(), ""));
     if (recordsToSave != null) {
       recordsToSave.setPatient(medicalRecord.getPatient());
       recordsToSave.setDiseases(medicalRecord.getDiseases());

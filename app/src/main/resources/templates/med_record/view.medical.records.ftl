@@ -6,7 +6,7 @@
     $("#medrecords").addClass('active');
 </script>
 
-<form method="post" action="/medrecords">
+<form method="post" action="/medrecord/all">
     <@spring.bind "MedRecords"/>
     <@spring.bind "SearchCriteria"/>
 
@@ -45,7 +45,7 @@
 
     <div class="row">
         <div class="pull-right">
-            <a href="/medrecord">
+            <a href="/medrecord/new">
                 <button type="button"
                         class="btn btn-primary">${springMacroRequestContext.getMessage('page.button.medRecord.register')}</button>
             </a>
@@ -98,7 +98,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+  <!--  <div class="row">
         <#if MedRecords?size gt 0>
             <ul class="pagination">
                 <li>
@@ -118,7 +118,7 @@
                 </li>
             </ul>
         </#if>
-    </div>
+    </div> -->
 
     <input type="hidden"
            name="${_csrf.parameterName}"

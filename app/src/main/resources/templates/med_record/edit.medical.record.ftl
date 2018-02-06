@@ -10,7 +10,7 @@
     });
 </script>
 
-<form id="MedRecordForm" class="form-horizontal" method="post" action="/medrecord" modelAttribute="MedRecord">
+<form id="MedRecordForm" class="form-horizontal" method="post" action="/medrecord/save" modelAttribute="MedRecord">
     <@spring.bind "MedRecord"/>
     <@spring.bind "Sexes"/>
     <@spring.bind "Countries"/>
