@@ -1,7 +1,8 @@
 package com.rozenkow.controller;
 
-import com.rozenkow.model.Visit;
+import com.rozenkow.model.User;
 import com.rozenkow.model.VisitStatus;
+import com.rozenkow.model.ui.CurrentVisit;
 import com.rozenkow.service.DictionaryService;
 import com.rozenkow.service.ScheduleService;
 import com.rozenkow.util.LocalDateTimeEditor;
@@ -59,12 +60,14 @@ public class WelcomeController {
   @RequestMapping(path = "/index", method = RequestMethod.GET)
   public String index(Model model) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication != null) {
-      List<Visit> visitsForToday = scheduleService.getVisitsForToday();
+    if (authentication != null && !authentication.getName().equals("anonymousUser")) {
+      User user = (User) authentication.getPrincipal();
+
+      List<CurrentVisit> visitsForToday = scheduleService.getVisitsForToday(user.getUsername());
       final Map<String, String> visitStatusMap = dictionaryService.buildLocalizedMap("page.field.visit.status.",
           VisitStatus.class, false);
 
-      model.addAttribute("Visits", visitsForToday);
+      model.addAttribute("CurrentVisits", visitsForToday);
       model.addAttribute("VisitStatuses", visitStatusMap);
       return "schedule/current_visits";
     }

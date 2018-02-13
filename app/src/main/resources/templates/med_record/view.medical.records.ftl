@@ -45,10 +45,12 @@
 
     <div class="row">
         <div class="pull-right">
-            <a href="/medrecord/new">
-                <button type="button"
-                        class="btn btn-primary">${springMacroRequestContext.getMessage('page.button.medRecord.register')}</button>
-            </a>
+            <@authorize ifAnyGranted="ROLE_OPERATOR">
+                <a href="/medrecord/new">
+                    <button type="button"
+                            class="btn btn-primary">${springMacroRequestContext.getMessage('page.button.medRecord.register')}</button>
+                </a>
+            </@authorize>
         </div>
     </div>
 

@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends MongoRepository<MedicalRecord, String> {
 
-  List<MedicalRecord> findDistinctByVisitsFromBetween(LocalDateTime from, LocalDateTime to);
+  List<MedicalRecord> findDistinctByVisitsVisitToIDAndVisitsFromBetween(String id, LocalDateTime from, LocalDateTime to);
 }

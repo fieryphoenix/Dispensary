@@ -16,7 +16,7 @@ public class LocalDateTimeEditor extends PropertyEditorSupport {
   private DateTimeFormatter dateTimeFormatter;
 
   public LocalDateTimeEditor(Locale locale) {
-    dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm");
     dateTimeFormatter = dateTimeFormatter.withLocale(locale);
   }
 

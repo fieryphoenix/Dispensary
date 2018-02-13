@@ -21,8 +21,4 @@
     <script type="application/javascript">
         $("#home").addClass('active');
     </script>
-
-    <@authorize ifAnyGranted="ROLE_USER">
-        <#include "schedule/current_visits.ftl" />
-    </@authorize>
 </@layout.indexmaster>

@@ -374,7 +374,7 @@
 <#-- Controls -->
     <div class="row">
         <div class="pull-right">
-            <a href="/medrecords">
+            <a href="/medrecord/all">
                 <button type="button"
                         class="btn btn-sm btn-danger"><@spring.message "page.button.cancel"/></button>
             </a>

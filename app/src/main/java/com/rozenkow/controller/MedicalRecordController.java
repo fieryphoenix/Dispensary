@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -106,7 +107,8 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/new", "/medrecord"}, method = RequestMethod.GET)
+  @RequestMapping(path = {"/new"}, method = RequestMethod.GET)
+  @PreAuthorize("hasRole('ROLE_OPERATOR')")
   public String createMedicalRecord(Model model) {
     logger.debug("createMedicalRecord()");
     return loadOrCreateMedicalRecord(Optional.empty(), "edit", model);

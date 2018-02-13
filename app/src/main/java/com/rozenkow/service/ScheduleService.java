@@ -1,6 +1,6 @@
 package com.rozenkow.service;
 
-import com.rozenkow.model.Visit;
+import com.rozenkow.model.ui.CurrentVisit;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ import java.util.List;
  * Created by Poul Rozenkow.
  */
 public interface ScheduleService {
-  List<Visit> getVisitsForToday();
+  List<CurrentVisit> getVisitsForToday(String username);
 }
