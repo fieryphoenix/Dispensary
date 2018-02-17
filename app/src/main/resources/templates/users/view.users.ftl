@@ -33,7 +33,7 @@
                             <label for="patient"
                                    class="col-sm-3 control-label"><@spring.message "page.header.username"/></label>
                             <div class="col-sm-9">
-                                <@spring.formInput "SearchCriteria.fullTextField1" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.user')}'" "text"/><@spring.showErrors "<br>"/>
+                                <@spring.formInput "SearchCriteria.fullTextField1" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.user')}'" "text"/><@spring.showErrors "<br/>"/>
                             </div>
                         </div>
                     </div>

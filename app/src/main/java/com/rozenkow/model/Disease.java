@@ -14,6 +14,7 @@ public class Disease implements Serializable {
 
   public Disease() {
     from = new Date();
+    to = new Date();
   }
 
   public String getName() {

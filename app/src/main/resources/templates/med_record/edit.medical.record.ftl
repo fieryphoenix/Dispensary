@@ -40,21 +40,21 @@
                         <label for="patient.firstName"
                                class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.person.firstName')}</label>
                         <div class="col-sm-9">
-                            <@spring.formInput "MedRecord.patient.firstName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.firstName')}' required autofocus" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "MedRecord.patient.firstName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.firstName')}' required autofocus" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="patient.lastName"
                                class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.person.lastName')}</label>
                         <div class="col-sm-9">
-                            <@spring.formInput "MedRecord.patient.lastName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.lastName')}' required" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "MedRecord.patient.lastName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.lastName')}' required" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="patient.middleName"
                                class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.person.middleName')}</label>
                         <div class="col-sm-9">
-                            <@spring.formInput "MedRecord.patient.middleName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.middleName')}'" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "MedRecord.patient.middleName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.middleName')}'" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -81,7 +81,7 @@
                         <div class="col-sm-9">
                             <@spring.formSingleSelect "MedRecord.patient.sex", Sexes, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.person.sex')}' required">
                             </@spring.formSingleSelect>
-                            <@spring.showErrors "<br>"/>
+                            <@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                 </div>
@@ -102,35 +102,35 @@
                             <div class="col-sm-9">
                                 <@spring.formSingleSelect "MedRecord.patient.address1.country", Countries, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.country')}' required">
                                 </@spring.formSingleSelect>
-                            <@spring.showErrors "<br>"/>
+                            <@spring.showErrors "<br/>"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="patient.address1.city"
                                    class="col-sm-3 control-label"><@spring.message "page.field.person.address.city"/></label>
                             <div class="col-sm-9">
-                                <@spring.formInput "MedRecord.patient.address1.city" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.city')}' required" "text"/><@spring.showErrors "<br>"/>
+                                <@spring.formInput "MedRecord.patient.address1.city" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.city')}' required" "text"/><@spring.showErrors "<br/>"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="patient.address1.street"
                                    class="col-sm-3 control-label"><@spring.message "page.field.person.address.street"/></label>
                             <div class="col-sm-9">
-                                <@spring.formInput "MedRecord.patient.address1.street" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.street')}' required" "text"/><@spring.showErrors "<br>"/>
+                                <@spring.formInput "MedRecord.patient.address1.street" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.street')}' required" "text"/><@spring.showErrors "<br/>"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="patient.address1.house"
                                    class="col-sm-3 control-label"><@spring.message "page.field.person.address.house"/></label>
                             <div class="col-sm-9">
-                                <@spring.formInput "MedRecord.patient.address1.house" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.house')}' required" "text"/><@spring.showErrors "<br>"/>
+                                <@spring.formInput "MedRecord.patient.address1.house" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.house')}' required" "text"/><@spring.showErrors "<br/>"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="patient.address1.flat"
                                    class="col-sm-3 control-label"><@spring.message "page.field.person.address.flat"/></label>
                             <div class="col-sm-9">
-                                <@spring.formInput "MedRecord.patient.address1.flat" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.flat')}'" "text"/><@spring.showErrors "<br>"/>
+                                <@spring.formInput "MedRecord.patient.address1.flat" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.address.flat')}'" "text"/><@spring.showErrors "<br/>"/>
                             </div>
                         </div>
                     </address>
@@ -145,7 +145,7 @@
                                     <#items as phone>
                                         <div class="row">
                                             <div class="col-sm-10 vcenter">
-                                                <@spring.formInput "MedRecord.patient.phones[${phone_index}]" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.phone')}'" "text"/><@spring.showErrors "<br>"/>
+                                                <@spring.formInput "MedRecord.patient.phones[${phone_index}]" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.phone')}'" "text"/><@spring.showErrors "<br/>"/>
                                                 <#--@formatter:off-->
                                             </div><!--
                                             --><div class="col-sm-2 vcenter">
@@ -210,29 +210,29 @@
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
-                                        <@spring.showErrors "<br>"/>
+                                        <@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
                                         <div class='input-group date datetimepicker' id='datetimepicker_to_${visit_index}'>
                                         <@spring.formInput "MedRecord.visits[${visit_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.to')}' required"/>
-                                        <@spring.showErrors "<br>"/>
+                                        <@spring.showErrors "<br/>"/>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </td>
                                     <td>
-                                        <@spring.formInput "MedRecord.visits[${visit_index}].goal" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.goal')}' required" "text"/><@spring.showErrors "<br>"/>
+                                        <@spring.formInput "MedRecord.visits[${visit_index}].goal" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.goal')}' required" "text"/><@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
                                         <@spring.formSingleSelect "MedRecord.visits[${visit_index}].visitToID", Doctors, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.visit.visitTo')}' required">
                                         </@spring.formSingleSelect>
-                                        <@spring.showErrors "<br>"/>
+                                        <@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
                                         <@spring.formSingleSelect "MedRecord.visits[${visit_index}].status", VisitStatuses, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.visit.status')}' required">
                                         </@spring.formSingleSelect>
-                                        <@spring.showErrors "<br>"/>
+                                        <@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
                                         <#if !readOnlyForm>
@@ -281,21 +281,21 @@
                                 <tr>
                                     <td>
                                         <div class='input-group date datepicker'>
-                                        <@spring.formInput "MedRecord.diseases[${disease_index}].from" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.from')}' required"/><@spring.showErrors "<br>"/>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].from" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.from')}' required"/><@spring.showErrors "<br/>"/>
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                                         </div>
                                     </td>
                                     <td>
                                         <div class='input-group date datepicker'>
-                                        <@spring.formInput "MedRecord.diseases[${disease_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.to')}'"/><@spring.showErrors "<br>"/>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.to')}'"/><@spring.showErrors "<br/>"/>
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                                         </div>
                                     </td>
                                     <td>
-                                        <@spring.formInput "MedRecord.diseases[${disease_index}].name" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.name')}' required" "text"/><@spring.showErrors "<br>"/>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].name" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.name')}' required" "text"/><@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
-                                        <@spring.formTextarea "MedRecord.diseases[${disease_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.notes')}'" /><@spring.showErrors "<br>"/>
+                                        <@spring.formTextarea "MedRecord.diseases[${disease_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.notes')}'" /><@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
                                         <#if !readOnlyForm>
@@ -343,7 +343,7 @@
                                 <tr>
                                     <td>
                                         <div class='input-group date datepicker'>
-                                        <@spring.formInput "MedRecord.ultrasounds[${ultrasound_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.date')}' required"/><@spring.showErrors "<br>"/>
+                                        <@spring.formInput "MedRecord.ultrasounds[${ultrasound_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.date')}' required"/><@spring.showErrors "<br/>"/>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -352,10 +352,10 @@
                                     <td>
                                         <@spring.formSingleSelect "MedRecord.ultrasounds[${ultrasound_index}].type", Ultrasounds, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.type')}' required">
                                         </@spring.formSingleSelect>
-                                        <@spring.showErrors "<br>"/>
+                                        <@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
-                                        <@spring.formTextarea "MedRecord.ultrasounds[${ultrasound_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.notes')}'" /><@spring.showErrors "<br>"/>
+                                        <@spring.formTextarea "MedRecord.ultrasounds[${ultrasound_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.notes')}'" /><@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
                                         <#if !readOnlyForm>

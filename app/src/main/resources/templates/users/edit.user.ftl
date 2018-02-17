@@ -37,7 +37,7 @@
                         <label for="username"
                                class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.username')}</label>
                         <div class="col-sm-9">
-                            <@spring.formInput "User.username" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.username')}' required autofocus" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "User.username" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.username')}' required autofocus" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,7 +49,7 @@
                             <#else>
                                 <#assign passReq="required"/>
                             </#if>
-                            <@spring.formInput "User.password" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.password')}' ${passReq}" "password"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "User.password" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.password')}' ${passReq}" "password"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -58,7 +58,7 @@
                         <div class="col-sm-9">
                             <@spring.formSingleSelect "User.role", Roles, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.user.role')}' required">
                             </@spring.formSingleSelect>
-                            <@spring.showErrors "<br>"/>
+                            <@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -67,7 +67,7 @@
                         <div class="col-sm-9">
                             <@spring.formSingleSelect "User.speciality", Specialities, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.worker.speciality')}'">
                             </@spring.formSingleSelect>
-                            <@spring.showErrors "<br>"/>
+                            <@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <hr/>
@@ -75,28 +75,29 @@
                         <label for="firstName"
                                class="col-sm-3 control-label"><@spring.message "page.field.person.firstName"/></label>
                         <div class="col-sm-9">
-                            <@spring.formInput "User.firstName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.firstName')}'" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "User.firstName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.firstName')}'" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="lastName"
                                class="col-sm-3 control-label"><@spring.message "page.field.person.lastName"/></label>
                         <div class="col-sm-9">
-                            <@spring.formInput "User.lastName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.lastName')}'" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "User.lastName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.lastName')}'" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="middleName"
                                class="col-sm-3 control-label"><@spring.message "page.field.person.middleName"/></label>
                         <div class="col-sm-9">
-                            <@spring.formInput "User.middleName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.middleName')}'" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "User.middleName" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.middleName')}'" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="birthDate"
                                class="col-sm-3 control-label"><@spring.message "page.field.person.birthDate"/></label>
-                        <div class="col-sm-9">
-                            <@spring.formInput "User.birthDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.birthDate')}'" "date"/><@spring.showErrors "<br>"/>
+                        <div class="col-sm-9 input-group date datepicker">
+                            <@spring.formInput "User.birthDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.birthDate')}'"/><@spring.showErrors "<br/>"/>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -105,7 +106,7 @@
                         <div class="col-sm-9">
                             <@spring.formSingleSelect "User.sex", Sexes, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.person.sex')}'">
                             </@spring.formSingleSelect>
-                            <@spring.showErrors "<br>"/>
+                            <@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                 </div>

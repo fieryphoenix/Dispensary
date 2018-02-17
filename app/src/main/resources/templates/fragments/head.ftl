@@ -25,4 +25,11 @@
 <script src="<@spring.url '/js/form.js'/>"></script>
 
 <link rel="icon" href="../../favicon.ico">
+
+<script type="application/javascript">
+    $(function () {
+        $(".datetimepicker").datetimepicker({locale: '${.locale}'});
+        $('.input-group.datepicker').datepicker({language: "${.locale}"});
+    });
+</script>
 </#macro>

@@ -8,11 +8,12 @@ import com.rozenkow.model.ui.SearchCriteria;
 import com.rozenkow.service.DictionaryService;
 import com.rozenkow.service.GeoService;
 import com.rozenkow.service.UserService;
+import com.rozenkow.util.LocalDateEditor;
 import com.rozenkow.validator.LoginFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,12 +31,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -69,9 +69,11 @@ public class UserController {
   @InitBinder
   protected void initBinder(WebDataBinder binder) {
 //    binder.setValidator(loginFormValidator);
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
-    binder.registerCustomEditor(Date.class, dateEditor);
+
+    Locale locale = LocaleContextHolder.getLocale();
+
+    LocalDateEditor localDateEditor = new LocalDateEditor(locale);
+    binder.registerCustomEditor(Date.class, localDateEditor);
   }
 
   @RequestMapping(path = "/login", method = RequestMethod.GET)

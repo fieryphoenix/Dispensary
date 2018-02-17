@@ -32,10 +32,10 @@
     <input type="hidden" id="id" value=""/>
     <label for="username"
            class="sr-only">${springMacroRequestContext.getMessage('page.field.username')}</label>
-    <@spring.formInput "UserForm.username" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.username')}' required autofocus" "text"/><@spring.showErrors "<br>"/>
+    <@spring.formInput "UserForm.username" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.username')}' required autofocus" "text"/><@spring.showErrors "<br/>"/>
     <label for="password"
            class="sr-only">${springMacroRequestContext.getMessage('page.field.password')}</label>
-    <@spring.formInput "UserForm.password" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.password')}' required" "password"/><@spring.showErrors "<br>"/>
+    <@spring.formInput "UserForm.password" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.password')}' required" "password"/><@spring.showErrors "<br/>"/>
     <div class="checkbox">
         <label>
         <#--<@spring.formCheckbox "Remember"/>${springMacroRequestContext.getMessage('page.field.rememberme')}-->
