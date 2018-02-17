@@ -12,6 +12,7 @@
     "jquery-ui": "git@github.com:jquery/jquery-ui.git",
     "jquery": "git@github.com:jquery/jquery.git",
     "eonasdan-bootstrap-datetimepicker": "git@github.com:Eonasdan/bootstrap-datetimepicker.git",
+    "bootstrap-datepicker": "git@github.com:uxsolutions/bootstrap-datepicker.git",
     "bootstrap": "git@github.com:twbs/bootstrap.git#3.3.7"
   }
 }

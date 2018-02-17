@@ -1,14 +1,30 @@
-[
-  {
-    "_class": "com.rozenkow.model.User",
-    "id": null,
-    "username": "admin",
-    "passwordHash": "YrTSnEM=",
-    "passwordSalt": "290937517430682174",
-    "role": "Admin",
-    "authorities": [
-      "USER",
-      "ADMIN"
-    ]
-  }
-]
+{
+  "_class" : "com.rozenkow.model.User",
+  "username" : "admin",
+  "passwordHash" : "GgfQg5k=",
+  "passwordSalt" : "732727584682342009",
+  "authorities" : [
+    {
+      "role" : "ROLE_USER",
+      "_class" : "org.springframework.security.core.authority.SimpleGrantedAuthority"
+    },
+    {
+      "role" : "ROLE_OPERATOR",
+      "_class" : "org.springframework.security.core.authority.SimpleGrantedAuthority"
+    },
+    {
+      "role" : "ROLE_ADMIN",
+      "_class" : "org.springframework.security.core.authority.SimpleGrantedAuthority"
+    }
+  ],
+  "role" : "Admin",
+  "firstName" : "",
+  "lastName" : "",
+  "middleName" : "",
+  "address1" : {
+    "country" : "US"
+  },
+  "phones" : [ ],
+  "updatedDate" : ISODate("2017-11-19T21:07:26.858Z"),
+  "version" : NumberLong(9)
+}

@@ -27,6 +27,7 @@ To run mongo
 ````sh
 > mongod.exe -f {path}\mongod.conf.yml
 ````
+where {path} should be replaced with path to your source directory
 
 > **Before first run:** Initialize DB
 

@@ -89,6 +89,7 @@
                                     <includes>
                                         <include>jquery/dist/**</include>
                                         <include>eonasdan-bootstrap-datetimepicker/build/**</include>
+                                        <include>bootstrap-datepicker/dist/**</include>
                                         <include>bootstrap/dist/**</include>
                                         <include>moment/min/**</include>
                                     </includes>

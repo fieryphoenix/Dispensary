@@ -5,8 +5,8 @@
 <script type="application/javascript">
     $("#medrecords").addClass('active');
     $(function () {
-        $("div[id^='datetimepicker_from_']").datetimepicker({locale: '${.locale}'});
-        $("div[id^='datetimepicker_to_']").datetimepicker({locale: '${.locale}'});
+        $(".datetimepicker").datetimepicker({locale: '${.locale}'});
+        $('.input-group.datepicker').datepicker({language: "${.locale}"});
     });
 </script>
 
@@ -61,17 +61,18 @@
                         <label for="patient.passportSeries"
                                class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.person.passport')}</label>
                         <div class="col-sm-3">
-                            <@spring.formInput "MedRecord.patient.passportSeries" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.passportSeries')}' required" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "MedRecord.patient.passportSeries" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.passportSeries')}' required" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                         <div class="col-sm-6">
-                            <@spring.formInput "MedRecord.patient.passportNumber" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.passportNumber')}' required" "text"/><@spring.showErrors "<br>"/>
+                            <@spring.formInput "MedRecord.patient.passportNumber" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.passportNumber')}' required" "text"/><@spring.showErrors "<br/>"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="patient.birthDate"
                                class="col-sm-3 control-label">${springMacroRequestContext.getMessage('page.field.person.birthDate')}</label>
-                        <div class="col-sm-9">
-                            <@spring.formInput "MedRecord.patient.birthDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.birthDate')}' required" "date"/><@spring.showErrors "<br>"/>
+                        <div class="col-sm-9 input-group date datepicker">
+                            <@spring.formInput "MedRecord.patient.birthDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.birthDate')}' required" /><@spring.showErrors "<br/>"/>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -186,7 +187,7 @@
                         <a class="accordion-toggle" data-toggle="collapse" href="#visits"></a>
                     </h3>
                 </div>
-                <div class="panel-body" id="visits">
+                <div class="panel-body in" id="visits">
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr>
@@ -203,7 +204,7 @@
                                 <#items as visit>
                                 <tr>
                                     <td>
-                                        <div class='input-group date' id='datetimepicker_from_${visit_index}'>
+                                        <div class='input-group date datetimepicker' id='datetimepicker_from_${visit_index}'>
                                             <@spring.formInput "MedRecord.visits[${visit_index}].from" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.from')}' required" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -212,7 +213,7 @@
                                         <@spring.showErrors "<br>"/>
                                     </td>
                                     <td>
-                                        <div class='input-group date' id='datetimepicker_to_${visit_index}'>
+                                        <div class='input-group date datetimepicker' id='datetimepicker_to_${visit_index}'>
                                         <@spring.formInput "MedRecord.visits[${visit_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.to')}' required"/>
                                         <@spring.showErrors "<br>"/>
                                             <span class="input-group-addon">
@@ -263,7 +264,7 @@
                         <a class="accordion-toggle" data-toggle="collapse" href="#diseases"></a>
                     </h3>
                 </div>
-                <div class="panel-body" id="diseases">
+                <div class="panel-body in" id="diseases">
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr>
@@ -279,10 +280,16 @@
                                 <#items as disease>
                                 <tr>
                                     <td>
-                                        <@spring.formInput "MedRecord.diseases[${disease_index}].from" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.from')}' required" "date"/><@spring.showErrors "<br>"/>
+                                        <div class='input-group date datepicker'>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].from" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.from')}' required"/><@spring.showErrors "<br>"/>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                        </div>
                                     </td>
                                     <td>
-                                        <@spring.formInput "MedRecord.diseases[${disease_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.to')}'" "date"/><@spring.showErrors "<br>"/>
+                                        <div class='input-group date datepicker'>
+                                        <@spring.formInput "MedRecord.diseases[${disease_index}].to" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.to')}'"/><@spring.showErrors "<br>"/>
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                        </div>
                                     </td>
                                     <td>
                                         <@spring.formInput "MedRecord.diseases[${disease_index}].name" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.disease.name')}' required" "text"/><@spring.showErrors "<br>"/>
@@ -320,7 +327,7 @@
                         <a class="accordion-toggle" data-toggle="collapse" href="#ultrasounds"></a>
                     </h3>
                 </div>
-                <div class="panel-body" id="ultrasounds">
+                <div class="panel-body in" id="ultrasounds">
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr>
@@ -335,7 +342,12 @@
                                 <#items as ultrasound>
                                 <tr>
                                     <td>
-                                        <@spring.formInput "MedRecord.ultrasounds[${ultrasound_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.date')}' required" "date"/><@spring.showErrors "<br>"/>
+                                        <div class='input-group date datepicker'>
+                                        <@spring.formInput "MedRecord.ultrasounds[${ultrasound_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.date')}' required"/><@spring.showErrors "<br>"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
                                     </td>
                                     <td>
                                         <@spring.formSingleSelect "MedRecord.ultrasounds[${ultrasound_index}].type", Ultrasounds, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.type')}' required">
@@ -348,7 +360,7 @@
                                     <td>
                                         <#if !readOnlyForm>
                                             <a href="#"
-                                               onclick="this.disabled=true;post('/medrecord/deleteDisease/${ultrasound_index}', null, 'post', 'MedRecordForm')">
+                                               onclick="this.disabled=true;post('/medrecord/deleteUltrasound/${ultrasound_index}', null, 'post', 'MedRecordForm')">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </a>
                                         </#if>

@@ -14,11 +14,11 @@ import com.rozenkow.service.DictionaryService;
 import com.rozenkow.service.GeoService;
 import com.rozenkow.service.MedicalRecordService;
 import com.rozenkow.service.WorkerService;
+import com.rozenkow.util.LocalDateEditor;
 import com.rozenkow.util.LocalDateTimeEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,13 +33,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -72,9 +71,8 @@ public class MedicalRecordController {
   public void bindingPreparation(WebDataBinder binder) {
     Locale locale = LocaleContextHolder.getLocale();
 
-    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
-    binder.registerCustomEditor(Date.class, dateEditor);
+    LocalDateEditor localDateEditor = new LocalDateEditor(locale);
+    binder.registerCustomEditor(Date.class, localDateEditor);
 
     LocalDateTimeEditor dateTimeEditor = new LocalDateTimeEditor(locale);
     binder.registerCustomEditor(LocalDateTime.class, dateTimeEditor);
@@ -122,7 +120,9 @@ public class MedicalRecordController {
         VisitStatus.class, false);
     final Map<String, String> specialitiesMap = dictionaryService.buildLocalizedMap("page.field.speciality.",
         Speciality.class, true);
-    final Map<String, String> doctorsWithSpeciality = workerService.getAvailableDoctors().stream()
+    final Map<String, String> doctorsWithSpeciality = workerService.getAvailableDoctors()
+        .stream()
+        .filter(w -> Objects.nonNull(w.getSpeciality()))
         .collect(Collectors.toMap(Worker::getId, w -> specialitiesMap.get(w.getSpeciality().name()) + " " + w
             .getFullName()));
 
