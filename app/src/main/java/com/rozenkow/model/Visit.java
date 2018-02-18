@@ -18,6 +18,8 @@ public class Visit extends AuditEntity {
 
   public Visit() {
     status = VisitStatus.Planned;
+    from = LocalDateTime.now();
+    to = LocalDateTime.now();
   }
 
   public String getVisitToID() {

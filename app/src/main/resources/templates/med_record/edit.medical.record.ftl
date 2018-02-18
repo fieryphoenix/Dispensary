@@ -264,7 +264,7 @@
                                         <@readonlyOrElse readOnlyForm MedRecord.visits[visit_index].goal><@spring.formInput "MedRecord.visits[${visit_index}].goal" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.visit.goal')}' required" "text"/><@spring.showErrors "<br/>"/></@readonlyOrElse>
                                     </td>
                                     <td>
-                                        <@readonlyOrElse readOnlyForm Doctors[MedRecord.visits[visit_index].visitToID]><@spring.formSingleSelect "MedRecord.visits[${visit_index}].visitToID", Doctors, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.visit.visitTo')}' required">
+                                        <@readonlyOrElse readOnlyForm Doctors[MedRecord.visits[visit_index].visitToID!'']><@spring.formSingleSelect "MedRecord.visits[${visit_index}].visitToID", Doctors, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.visit.visitTo')}' required">
                                         </@spring.formSingleSelect>
                                         <@spring.showErrors "<br/>"/>
                                         </@readonlyOrElse>
