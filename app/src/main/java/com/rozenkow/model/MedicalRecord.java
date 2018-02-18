@@ -16,6 +16,8 @@ public class MedicalRecord extends AuditEntity {
   private List<Ultrasound> ultrasounds;
   private List<String> medicalExaminations;
   private List<Visit> visits;
+  private List<Analysis> MRIs;
+  private List<Analysis> CTScans;
 
   public MedicalRecord() {
     patient = new Person();
@@ -23,6 +25,8 @@ public class MedicalRecord extends AuditEntity {
     ultrasounds = new ArrayList<>();
     medicalExaminations = new ArrayList<>();
     visits = new ArrayList<>();
+    MRIs = new ArrayList<>();
+    CTScans = new ArrayList<>();
   }
 
   public Person getPatient() {
@@ -73,18 +77,62 @@ public class MedicalRecord extends AuditEntity {
     this.visits = visits;
   }
 
+  public List<Analysis> getMRIs() {
+    return MRIs;
+  }
+
+  public void setMRIs(List<Analysis> MRIs) {
+    this.MRIs = MRIs;
+  }
+
+  public List<Analysis> getCTScans() {
+    return CTScans;
+  }
+
+  public void setCTScans(List<Analysis> CTScans) {
+    this.CTScans = CTScans;
+  }
+
+  public List<? extends Analysis> getAnalysis(Analysis.Type type) {
+    switch (type) {
+      case MRI:
+        return getMRIs();
+      case CTScan:
+        return getCTScans();
+      case Ultrasound:
+        return getUltrasounds();
+      default:
+        throw new UnsupportedOperationException("Unsupported Type");
+    }
+  }
+
+  public void addAnalysis(Analysis.Type type) {
+    switch (type) {
+      case MRI:
+        getMRIs().add(new Analysis());
+        break;
+      case CTScan:
+        getCTScans().add(new Analysis());
+        break;
+      case Ultrasound:
+        getUltrasounds().add(new Ultrasound());
+        break;
+      default:
+        throw new UnsupportedOperationException("Unsupported Type");
+    }
+  }
+
   @Override
   public String toString() {
     return "MedicalRecord{" +
-           "id='" + getId() + '\'' +
-           ", patient=" + patient +
+           "patient=" + patient +
            ", number='" + number + '\'' +
-           ", created=" + getCreatedDate() +
-           ", modified=" + getUpdatedDate() +
            ", diseases=" + diseases +
            ", ultrasounds=" + ultrasounds +
            ", medicalExaminations=" + medicalExaminations +
            ", visits=" + visits +
-           '}';
+           ", MRIs=" + MRIs +
+           ", CTScans=" + CTScans +
+           "} " + super.toString();
   }
 }

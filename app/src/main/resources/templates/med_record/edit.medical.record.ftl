@@ -331,9 +331,9 @@
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr>
-                            <th><@spring.message "page.field.ultrasound.date"/></th>
+                            <th><@spring.message "page.field.analysis.date"/></th>
                             <th><@spring.message "page.field.ultrasound.type"/></th>
-                            <th><@spring.message "page.field.ultrasound.notes"/></th>
+                            <th><@spring.message "page.field.analysis.notes"/></th>
                             <th><@spring.message "page.actions"/></th>
                         </tr>
                         </thead>
@@ -343,7 +343,7 @@
                                 <tr>
                                     <td>
                                         <div class='input-group date datepicker'>
-                                        <@spring.formInput "MedRecord.ultrasounds[${ultrasound_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.date')}' required"/><@spring.showErrors "<br/>"/>
+                                        <@spring.formInput "MedRecord.ultrasounds[${ultrasound_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.analysis.date')}' required"/><@spring.showErrors "<br/>"/>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -355,12 +355,12 @@
                                         <@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
-                                        <@spring.formTextarea "MedRecord.ultrasounds[${ultrasound_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.ultrasound.notes')}'" /><@spring.showErrors "<br/>"/>
+                                        <@spring.formTextarea "MedRecord.ultrasounds[${ultrasound_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.analysis.notes')}'" /><@spring.showErrors "<br/>"/>
                                     </td>
                                     <td>
                                         <#if !readOnlyForm>
                                             <a href="#"
-                                               onclick="this.disabled=true;post('/medrecord/deleteUltrasound/${ultrasound_index}', null, 'post', 'MedRecordForm')">
+                                               onclick="this.disabled=true;post('/medrecord/deleteAnalysis/Ultrasound/${ultrasound_index}', null, 'post', 'MedRecordForm')">
                                                 <span class="glyphicon glyphicon-trash"></span>
                                             </a>
                                         </#if>
@@ -373,12 +373,122 @@
                     </table>
                     <#if !readOnlyForm>
                         <button type="button" class="btn btn-xs"
-                                onclick="this.disabled=true;post('/medrecord/addUltrasound', null, 'post', 'MedRecordForm')">
+                                onclick="this.disabled=true;post('/medrecord/addAnalysis/Ultrasound', null, 'post', 'MedRecordForm')">
                             <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<@spring.message "page.button.addNew"/>
                         </button>
                     </#if>
                 </div>
             </div> <!-- end of Ultrasounds -->
+
+            <#-- Magnetic Resonance Imaging -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <@spring.message "page.header.patient.mri"/>
+                        <a class="accordion-toggle" data-toggle="collapse" href="#mri"></a>
+                    </h3>
+                </div>
+                <div class="panel-body in" id="mri">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th><@spring.message "page.field.analysis.date"/></th>
+                            <th><@spring.message "page.field.analysis.notes"/></th>
+                            <th><@spring.message "page.actions"/></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list MedRecord.MRIs>
+                        <#items as mri>
+                        <tr>
+                            <td>
+                                <div class='input-group date datepicker'>
+                                    <@spring.formInput "MedRecord.MRIs[${mri_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.analysis.date')}' required"/><@spring.showErrors "<br/>"/>
+                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <@spring.formTextarea "MedRecord.MRIs[${mri_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.analysis.notes')}'" /><@spring.showErrors "<br/>"/>
+                            </td>
+                            <td>
+                                <#if !readOnlyForm>
+                                <a href="#"
+                                   onclick="this.disabled=true;post('/medrecord/deleteAnalysis/MRI/${mri_index}', null, 'post', 'MedRecordForm')">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                            </#if>
+                            </td>
+                        </tr>
+                        </#items>
+                    </#list>
+
+                    </tbody>
+                    </table>
+                    <#if !readOnlyForm>
+                    <button type="button" class="btn btn-xs"
+                            onclick="this.disabled=true;post('/medrecord/addAnalysis/MRI', null, 'post', 'MedRecordForm')">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<@spring.message "page.button.addNew"/>
+                    </button>
+                </#if>
+            </div>
+            </div> <!-- end of Magnetic Resonance Imaging -->
+
+    <#-- CT Scans -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <@spring.message "page.header.patient.ctscan"/>
+                <a class="accordion-toggle" data-toggle="collapse" href="#ctscan"></a>
+            </h3>
+        </div>
+        <div class="panel-body in" id="ctscan">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th><@spring.message "page.field.analysis.date"/></th>
+                    <th><@spring.message "page.field.analysis.notes"/></th>
+                    <th><@spring.message "page.actions"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list MedRecord.CTScans>
+                <#items as ctscan>
+                <tr>
+                    <td>
+                        <div class='input-group date datepicker'>
+                            <@spring.formInput "MedRecord.CTScans[${ctscan_index}].recordDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.analysis.date')}' required"/><@spring.showErrors "<br/>"/>
+                            <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                        </div>
+                    </td>
+                    <td>
+                        <@spring.formTextarea "MedRecord.CTScans[${ctscan_index}].notes" "rows='5' cols='80' class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.analysis.notes')}'" /><@spring.showErrors "<br/>"/>
+                    </td>
+                    <td>
+                        <#if !readOnlyForm>
+                        <a href="#"
+                           onclick="this.disabled=true;post('/medrecord/deleteAnalysis/CTScan/${ctscan_index}', null, 'post', 'MedRecordForm')">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </#if>
+                    </td>
+                </tr>
+                </#items>
+            </#list>
+
+            </tbody>
+            </table>
+            <#if !readOnlyForm>
+            <button type="button" class="btn btn-xs"
+                    onclick="this.disabled=true;post('/medrecord/addAnalysis/CTScan', null, 'post', 'MedRecordForm')">
+                <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;<@spring.message "page.button.addNew"/>
+            </button>
+        </#if>
+    </div>
+    </div> <!-- end of Magnetic Resonance Imaging -->
         </div>
     <#-- End of Medical Record -->
     </div>

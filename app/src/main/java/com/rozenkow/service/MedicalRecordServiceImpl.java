@@ -43,6 +43,8 @@ class MedicalRecordServiceImpl implements MedicalRecordService {
       recordsToSave.setMedicalExaminations(medicalRecord.getMedicalExaminations());
       recordsToSave.setUltrasounds(medicalRecord.getUltrasounds());
       recordsToSave.setVisits(medicalRecord.getVisits());
+      recordsToSave.setMRIs(medicalRecord.getMRIs());
+      recordsToSave.setCTScans(medicalRecord.getCTScans());
     } else {
       recordsToSave = medicalRecord;
     }

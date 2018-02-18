@@ -1,10 +1,10 @@
 package com.rozenkow.controller;
 
+import com.rozenkow.model.Analysis;
 import com.rozenkow.model.Disease;
 import com.rozenkow.model.MedicalRecord;
 import com.rozenkow.model.Sex;
 import com.rozenkow.model.Speciality;
-import com.rozenkow.model.Ultrasound;
 import com.rozenkow.model.UltrasoundType;
 import com.rozenkow.model.Visit;
 import com.rozenkow.model.VisitStatus;
@@ -47,6 +47,7 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping("/medrecord")
+@PreAuthorize("hasRole('ROLE_USER')")
 public class MedicalRecordController {
   private static final String MEDICAL_RECORDS = "med_record/view.medical.records";
   private static final String EDIT_MEDICAL_RECORD = "med_record/edit.medical.record";
@@ -216,24 +217,29 @@ public class MedicalRecordController {
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/addUltrasound"}, method = RequestMethod.POST)
-  public String addUltrasound(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @ModelAttribute
-      ("readOnlyForm") String readOnly, Model model) {
-    logger.debug("addUltrasound(): MedRecord = {}", medicalRecord);
+  @RequestMapping(path = {"/addAnalysis/{type}"}, method = RequestMethod.POST)
+  public String addAnalysis(@ModelAttribute("MedRecord") MedicalRecord medicalRecord,
+                            @PathVariable("type") Analysis.Type type,
+                            @ModelAttribute("readOnlyForm") String readOnly,
+                            Model model) {
+    logger.debug("addAnalysis(): type={},  MedRecord = {}", type, medicalRecord);
 
-    medicalRecord.getUltrasounds().add(new Ultrasound());
+    medicalRecord.addAnalysis(type);
     initRecordForEdit(model, medicalRecord, readOnly);
 
     return EDIT_MEDICAL_RECORD;
   }
 
-  @RequestMapping(path = {"/deleteUltrasound/{index}"}, method = RequestMethod.POST)
-  public String deleteUltrasound(@ModelAttribute("MedRecord") MedicalRecord medicalRecord, @PathVariable("index") int
-      index, @ModelAttribute("readOnlyForm") String readOnly, Model model) {
-    logger.debug("deleteUltrasound(): index={}, MedRecord = {}", index, medicalRecord);
-    List<Ultrasound> ultrasounds = medicalRecord.getUltrasounds();
-    if (ultrasounds.size() > index) {
-      ultrasounds.remove(index);
+  @RequestMapping(path = {"/deleteAnalysis/{type}/{index}"}, method = RequestMethod.POST)
+  public String deleteAnalysis(@ModelAttribute("MedRecord") MedicalRecord medicalRecord,
+                               @PathVariable("type") Analysis.Type type,
+                               @PathVariable("index") int index,
+                               @ModelAttribute("readOnlyForm") String readOnly,
+                               Model model) {
+    logger.debug("deleteAnalysis(): type={}, index={}, MedRecord = {}", type, index, medicalRecord);
+    List<?> analysis = medicalRecord.getAnalysis(type);
+    if (analysis.size() > index) {
+      analysis.remove(index);
     }
     initRecordForEdit(model, medicalRecord, readOnly);
 
