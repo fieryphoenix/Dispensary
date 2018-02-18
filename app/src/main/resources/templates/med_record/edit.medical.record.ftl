@@ -107,7 +107,7 @@
                         <label for="patient.birthDate"
                                class="col-sm-3 ${labelClass}">${springMacroRequestContext.getMessage('page.field.person.birthDate')}</label>
                         <div class="col-sm-9 ${datepicker}">
-                            <@readonlyOrElse readOnlyForm MedRecord.patient.birthDate?date><@spring.formInput "MedRecord.patient.birthDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.birthDate')}' required" /><@spring.showErrors "<br/>"/>
+                            <@readonlyOrElse readOnlyForm MedRecord.patient.birthDate!?date><@spring.formInput "MedRecord.patient.birthDate" "class='form-control' placeholder='${springMacroRequestContext.getMessage('page.field.person.birthDate')}' required" /><@spring.showErrors "<br/>"/>
                             <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                             </@readonlyOrElse>
                         </div>
@@ -116,7 +116,7 @@
                         <label for="patient.sex"
                                class="col-sm-3 ${labelClass}">${springMacroRequestContext.getMessage('page.field.person.sex')}</label>
                         <div class="col-sm-9">
-                            <@readonlyOrElse readOnlyForm Sexes[MedRecord.patient.sex]><@spring.formSingleSelect "MedRecord.patient.sex", Sexes, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.person.sex')}' required">
+                            <@readonlyOrElse readOnlyForm Sexes[MedRecord.patient.sex!'']><@spring.formSingleSelect "MedRecord.patient.sex", Sexes, "class='form-control chosen-select' placeholder='${springMacroRequestContext.getMessage('page.field.person.sex')}' required">
                             </@spring.formSingleSelect>
                             <@spring.showErrors "<br/>"/></@readonlyOrElse>
                         </div>
