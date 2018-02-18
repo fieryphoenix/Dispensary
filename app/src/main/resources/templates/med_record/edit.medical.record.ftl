@@ -10,6 +10,29 @@
     });
 </script>
 
+<#macro controls>
+<#-- Controls -->
+<div class="row hidden-print">
+    <div class="pull-right">
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
+        <a href="/medrecord/all">
+            <button type="button"
+                    class="btn btn-sm btn-danger"><@spring.message "page.button.cancel"/></button>
+        </a>
+        <a href="javascript: if(window.print) window.print()">
+            <button type="button"
+                    class="btn btn-sm btn-info"><@spring.message "page.button.print"/></button>
+        </a>
+        <@readonlyOrElse readOnlyForm>
+        <button type="submit"
+                class="btn btn-success"><@spring.message "page.button.save"/></button>
+    </@readonlyOrElse>
+    </div>
+</div>
+</#macro>
+
 <form id="MedRecordForm" class="form-horizontal" method="post" action="/medrecord/save" modelAttribute="MedRecord">
     <@spring.bind "MedRecord"/>
     <@spring.bind "Sexes"/>
@@ -26,6 +49,7 @@
         </#if>
 
     </div>
+    <@controls/>
 
     <#if !readOnlyForm>
         <#assign labelClass = 'control-label'>
@@ -511,22 +535,7 @@
     <#-- End of Medical Record -->
     </div>
 
-<#-- Controls -->
-    <div class="row">
-        <div class="pull-right">
-            <a href="/medrecord/all" class="hidden-print">
-                <button type="button"
-                        class="btn btn-sm btn-danger"><@spring.message "page.button.cancel"/></button>
-            </a>
-            <input type="hidden"
-                   name="${_csrf.parameterName}"
-                   value="${_csrf.token}"/>
-            <@readonlyOrElse readOnlyForm>
-                <button type="submit"
-                        class="btn btn-success"><@spring.message "page.button.save"/></button>
-            </@readonlyOrElse>
-        </div>
-    </div>
+    <@controls/>
 
 <#-- Read only -->
     <@spring.bind "readOnlyForm"/>
